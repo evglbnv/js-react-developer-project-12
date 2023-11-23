@@ -1,0 +1,14 @@
+{
+  "name": "@hexlet/code",
+  "version": "1.0.0",
+  "description": "chat project",
+  "main": "index.js",
+  "scripts": {
+    "test": "npm test"
+  },
+  "author": "Evgeniy LOBANOV",
+  "license": "ISC",
+  "dependencies": {
+    "@hexlet/chat-server": "^1.1.8"
+  }
+}
