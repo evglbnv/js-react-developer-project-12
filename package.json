@@ -4,7 +4,9 @@
   "description": "chat project",
   "main": "index.js",
   "scripts": {
-    "test": "npm test"
+    "build": "npm run build --prefix frontend",
+    "start": "start-server -p 5000 -s ./frontend/build",
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Evgeniy LOBANOV",
   "license": "ISC",
