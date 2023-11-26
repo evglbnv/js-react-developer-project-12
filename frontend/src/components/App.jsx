@@ -1,6 +1,22 @@
 import React from "react";
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import ChatPage from "./ChatPage";
+import LoginPage from "./LoginPage";
+import NotFoundPage from "./NotFoundPage";
 
-const App = () => <h1>Hexlet Chat</h1>;
+const App = () => {
+
+    return (
+        <>
+            <Router>
+                <Routes>
+                    <Route path="/login" element={<LoginPage />} />
+                    <Route path="/" element={<ChatPage />} />
+                    <Route path="*" element={<NotFoundPage />} />
+                </Routes>
+            </Router>
+        </>
+    )
+};
 
 export default App;
