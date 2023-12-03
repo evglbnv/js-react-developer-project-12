@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import axios from 'axios';
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import { Link, useNavigate } from 'react-router-dom';
 import Container from 'react-bootstrap/Container'
 import Form from 'react-bootstrap/Form'
@@ -68,10 +68,15 @@ const validationSchema = Yup.object().shape({
 
 const LoginPage = () => {
 
-    const navigate = useNavigate();
-    // const auth = useAuth()
 
+    const [authFailed, setAuthFailed] = useState(false)
+
+    const navigate = useNavigate();
     const auth = useAuth();
+    const inputRef = useRef();
+    useEffect(() => {
+        inputRef.current?.focus();
+    }, []);
 
     const handleSubmitForm = async (values) => {
         try {
@@ -80,15 +85,18 @@ const LoginPage = () => {
             auth.logIn()
             localStorage.setItem('user', JSON.stringify(response.data))
             navigate('/')
+            inputRef.current.select();
         } catch (error) {
             console.error(error)
+            if (error.isAxiosError && error.response.status === 401) {
+                setAuthFailed(true)
+                return
+            }
+            throw error
         }
     }
 
-    const inputRef = useRef();
-    useEffect(() => {
-        inputRef.current?.focus();
-    }, []);
+
 
     const formik = useFormik({
         initialValues: {
@@ -113,10 +121,11 @@ const LoginPage = () => {
                                     placeholder="Ваш ник"
                                     value={formik.values.username}
                                     onChange={formik.handleChange}
-                                    isInvalid={!!formik.errors.username}
+                                    ref={inputRef}
+                                    isInvalid={(!!formik.errors.username) || authFailed}
                                 />
                                 <Form.Control.Feedback type="invalid" tooltip >
-                                    {formik.errors.username}
+                                    {formik.errors.username ? formik.errors.username : null}
                                 </Form.Control.Feedback>
                             </FloatingLabel>
                             <FloatingLabel controlId="floatingPassword" label="Ваш пароль" className="position-relative">
@@ -126,10 +135,11 @@ const LoginPage = () => {
                                     placeholder="Ваш ник"
                                     value={formik.values.password}
                                     onChange={formik.handleChange}
-                                    isInvalid={formik.errors.password}
+                                    ref={inputRef}
+                                    isInvalid={(!!formik.errors.password) || authFailed}
                                 />
                                 <Form.Control.Feedback type="invalid" tooltip >
-                                    {formik.errors.password}
+                                    {formik.errors.password ? formik.errors.password : 'Неверные имя пользователя или пароль'}
                                 </Form.Control.Feedback>
                             </FloatingLabel>
                             <Form.Control.Feedback type="invalid" tooltip className="position-absolute top-0 start-100">

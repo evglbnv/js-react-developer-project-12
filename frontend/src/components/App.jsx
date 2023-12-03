@@ -23,7 +23,6 @@ const AuthRoute = ({ children }) => {
 
 const App = () => {
 
-
     return (
         <>
             <Router>
