@@ -1,6 +1,7 @@
 /* eslint-disable react/prop-types */
-import React from "react";
-import { Link } from "react-router-dom";
+import axios from 'axios';
+import React, { useRef, useEffect } from "react";
+import { Link, useNavigate } from 'react-router-dom';
 import Container from 'react-bootstrap/Container'
 import Form from 'react-bootstrap/Form'
 import Row from 'react-bootstrap/Row';
@@ -11,6 +12,8 @@ import Stack from 'react-bootstrap/Stack'
 import FloatingLabel from "react-bootstrap/esm/FloatingLabel";
 import loginImage from '../images/login-image.jpg'
 import Button from 'react-bootstrap/Button';
+// eslint-disable-next-line no-unused-vars
+import useAuth from './hooks/useAuth.jsx';
 import * as Yup from 'yup';
 import { useFormik } from 'formik';
 // import { useEffect } from "react";
@@ -61,12 +64,31 @@ const validationSchema = Yup.object().shape({
 //     inputRef.current?.focus();
 // }, []);
 
-const useSubmit = () => {
-
-}
 
 
 const LoginPage = () => {
+
+    const navigate = useNavigate();
+    // const auth = useAuth()
+
+    const auth = useAuth();
+
+    const handleSubmitForm = async (values) => {
+        try {
+            const response = await axios.post('/api/v1/login', values)
+            console.log(response)
+            auth.logIn()
+            localStorage.setItem('user', JSON.stringify(response.data))
+            navigate('/')
+        } catch (error) {
+            console.error(error)
+        }
+    }
+
+    const inputRef = useRef();
+    useEffect(() => {
+        inputRef.current?.focus();
+    }, []);
 
     const formik = useFormik({
         initialValues: {
@@ -74,7 +96,7 @@ const LoginPage = () => {
             password: '',
         },
         validationSchema,
-        onSubmit: useSubmit(),
+        onSubmit: (values) => handleSubmitForm(values),
     })
 
     return (
