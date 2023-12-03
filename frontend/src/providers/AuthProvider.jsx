@@ -10,7 +10,19 @@ const AuthProvider = ({ children }) => {
         setLoggedIn(true);
     }, []);
 
-    const value = React.useMemo(() => ({ loggedIn, logIn }), [loggedIn, logIn])
+    const getAuthHeader = useCallback(() => {
+        const user = JSON.parse(localStorage.getItem('user'))
+        if (user) {
+            return {
+                headers: { Authorization: `Bearer ${user.token}` }
+            }
+        }
+        return {}
+    }, [])
+
+    console.log(getAuthHeader)
+
+    const value = React.useMemo(() => ({ loggedIn, logIn, getAuthHeader }), [loggedIn, logIn])
 
     console.log(value)
 

@@ -22,6 +22,8 @@ const AuthRoute = ({ children }) => {
 }
 
 const App = () => {
+    const auth = useAuth();
+    console.log(auth.getAuthHeader)
 
     return (
         <>
