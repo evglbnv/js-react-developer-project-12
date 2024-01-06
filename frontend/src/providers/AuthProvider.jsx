@@ -20,11 +20,8 @@ const AuthProvider = ({ children }) => {
         return {}
     }, [])
 
-    console.log(getAuthHeader)
-
     const value = React.useMemo(() => ({ loggedIn, logIn, getAuthHeader }), [loggedIn, logIn])
 
-    console.log(value)
 
     return (
         <AuthContext.Provider value={value} >
