@@ -1,11 +1,27 @@
-import React from 'react';
+/* eslint-disable no-unused-vars */
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux'
 import {
-    Button, Nav, Dropdown
+    Button
 } from 'react-bootstrap';
+import useAuth from "./hooks/useAuth";
+import fetchChannels from '../api/fetchApi';
+
 
 
 
 const Channels = () => {
+
+    const { channels } = useSelector(state => state.channelsReducer);
+    console.log(channels)
+    const dispatch = useDispatch();
+    const auth = useAuth();
+    console.log(auth.getAuthHeader())
+
+    useEffect(() => {
+        dispatch(fetchChannels(auth.getAuthHeader()));
+    }, [dispatch])
+
     return (
         <div className="d-flex flex-column h-100">
             <div className="d-flex justify-content-between px-3 mb-3">
@@ -19,7 +35,9 @@ const Channels = () => {
                     +
                 </Button>
             </div>
-            <Nav
+
+
+            {/* <Nav
                 as="ul"
                 fill
                 variant="pills"
@@ -39,7 +57,7 @@ const Channels = () => {
                         </Button>
                     </Dropdown>
                 </Nav.Item>
-            </Nav>
+            </Nav> */}
 
         </div>
     )

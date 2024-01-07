@@ -1,13 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import {createAsyncThunk} from '@reduxjs/toolkit';
-import axios from 'axios';
-
-const fetchChannels = createAsyncThunk('channels/fetchAll', 
-async (token) => {
-    const response = await axios.get('/api/v1/data', {headers: token})
-    return response.data.channels
-}
-)
+import fetchChannels from "../api/fetchApi";
 
 const initialState = {
     channels: [],
@@ -22,14 +14,13 @@ const channelsSlice = createSlice({
     initialState,
     reducers: {},
     extraReducers: (builder) => {
-
         builder.addCase(fetchChannels.pending, (state) => {
             state.isLoading = true
         })
 
         builder.addCase(fetchChannels.fulfilled, (state,action) => {
             state.isLoading = false,
-            state.channels = action.payload
+            state.channels = action.payload,
             state.error = ''
         })
 
@@ -40,5 +31,5 @@ const channelsSlice = createSlice({
     }
 })
 
-export default channelsSlice.reducer
-
+const {reducer} = channelsSlice;
+export default reducer;

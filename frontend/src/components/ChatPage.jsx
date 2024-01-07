@@ -1,5 +1,4 @@
 import React from "react";
-import useAuth from '../components/hooks/useAuth';
 import {
     Container,
     Row,
@@ -8,10 +7,6 @@ import {
 import Channels from "./Channels";
 
 const ChatPage = () => {
-
-    const { getAuthHeader } = useAuth();
-    const authHeader = getAuthHeader();
-    console.log(authHeader)
 
     return (
         <Container className="h-100 my-4 overflow-hidden rounded shadow">

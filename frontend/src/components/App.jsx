@@ -1,12 +1,12 @@
 /* eslint-disable react/prop-types */
-import React, { useEffect } from "react";
+import React from "react";
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import ChatPage from "./ChatPage";
 import LoginPage from "./LoginPage";
 import NotFoundPage from "./NotFoundPage";
 import useAuth from "./hooks/useAuth";
 
-import axios from 'axios';
+// import axios from 'axios';
 
 const PrivateRoute = ({ children }) => {
     const auth = useAuth();
@@ -25,19 +25,25 @@ const AuthRoute = ({ children }) => {
 
 const App = () => {
 
-    const { getAuthHeader } = useAuth();
-    const authHeader = getAuthHeader();
-    console.log(authHeader)
+    // const { getAuthHeader } = useAuth();
+    // const authHeader = getAuthHeader();
+    // console.log(authHeader)
 
-    useEffect(() => {
-        axios.get('/api/v1/data', {
-            headers: {
-                Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTcwMjYxNDY1OH0.-vpvWuQwcMISxUYNn3PdXkSxJwLHGpSDa0Rkj6nBFxE`,
-            },
-        }).then((response) => {
-            console.log(response.data); // => { channels: [...], currentChannelId: 1, messages: [] }
-        })
-    }, [])
+    // const auth = useAuth()
+    // console.log(auth)
+
+    // const authHeader = auth.getAuthHeader()
+    // console.log(authHeader)
+
+    // useEffect(() => {
+    //     axios.get('/api/v1/data', {
+    //         headers: {
+    //             Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTcwMjYxNDY1OH0.-vpvWuQwcMISxUYNn3PdXkSxJwLHGpSDa0Rkj6nBFxE`,
+    //         },
+    //     }).then((response) => {
+    //         console.log(response.data); // => { channels: [...], currentChannelId: 1, messages: [] }
+    //     })
+    // }, [])
 
     return (
         <>
