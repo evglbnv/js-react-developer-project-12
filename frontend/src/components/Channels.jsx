@@ -12,18 +12,20 @@ import fetchChannels from '../api/fetchApi';
 
 const Channels = () => {
 
-    const { channels } = useSelector(state => state.channelsReducer);
-    console.log(channels)
+    const { channels, currentChannelId } = useSelector(state => state.channelsReducer);
     const dispatch = useDispatch();
     const auth = useAuth();
-    console.log(auth.getAuthHeader())
 
     useEffect(() => {
         dispatch(fetchChannels(auth.getAuthHeader()));
-    }, [dispatch])
+    }, [auth, dispatch])
+
+    console.log(channels)
 
     return (
-        <div className="d-flex flex-column h-100">
+        <div className="d-flex flex-column h-100"
+            style={{ overflowY: 'auto', maxHeight: '650px' }}
+        >
             <div className="d-flex justify-content-between px-3 mb-3">
                 <h2 className="h4 m-0">Каналы</h2>
                 <Button
@@ -34,9 +36,17 @@ const Channels = () => {
                 >
                     +
                 </Button>
+
+
             </div>
 
-
+            {channels.map(channel => <div className="w-100 d-flex justify-content-between" key={channel.id}>
+                <button
+                    className={currentChannelId === channel.id ? "w-100 rounded-0 text-center btn btn-secondary" : "w-100 rounded-0 text-center btn btn-light"}>
+                    <span className="text-break">{channel.name}</span>
+                </button>
+            </div>)
+            }
             {/* <Nav
                 as="ul"
                 fill
@@ -59,7 +69,7 @@ const Channels = () => {
                 </Nav.Item>
             </Nav> */}
 
-        </div>
+        </div >
     )
 }
 
