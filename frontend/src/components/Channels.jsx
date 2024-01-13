@@ -5,7 +5,7 @@ import {
     Button
 } from 'react-bootstrap';
 import useAuth from "./hooks/useAuth";
-import fetchChannels from '../api/fetchApi';
+import { fetchChannels } from '../api/fetchApi';
 
 
 

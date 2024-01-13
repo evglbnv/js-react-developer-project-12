@@ -1,7 +1,7 @@
 import {createAsyncThunk} from '@reduxjs/toolkit';
 import axios from 'axios';
 
-const fetchChannels = createAsyncThunk(
+export const fetchChannels = createAsyncThunk(
     'channels/fetchAll', 
     async (token, thunkAPI) => {
     try {
@@ -14,4 +14,15 @@ const fetchChannels = createAsyncThunk(
 }
 )
 
-export default fetchChannels
+export const fetchMessages = createAsyncThunk( 
+    'messages/fetchAll', 
+    async (token, thunkAPI) => {
+        try{
+            const response = await axios.get('/api/v1/data', token)
+        return response.data.messages
+        }
+        catch (e) {
+            return thunkAPI.rejectWithValue(e.message)
+        }
+    }
+)

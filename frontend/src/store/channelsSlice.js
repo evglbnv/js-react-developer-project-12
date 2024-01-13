@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import fetchChannels from "../api/fetchApi";
+import {fetchChannels} from "../api/fetchApi";
 
 const initialState = {
     channels: [],

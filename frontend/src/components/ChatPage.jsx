@@ -5,6 +5,7 @@ import {
     Col,
 } from 'react-bootstrap';
 import Channels from "./Channels";
+import { Messages } from "./Messages";
 
 const ChatPage = () => {
 
@@ -15,7 +16,7 @@ const ChatPage = () => {
                     <Channels />
                 </Col>
                 <Col className="h-100 p-0">
-                    {/* <Messages /> */}
+                    <Messages />
                 </Col>
             </Row>
         </Container>
