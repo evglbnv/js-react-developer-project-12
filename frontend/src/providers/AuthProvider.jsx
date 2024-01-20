@@ -6,9 +6,16 @@ const AuthProvider = ({ children }) => {
 
     const [loggedIn, setLoggedIn] = useState(!!localStorage.getItem('user'))
 
-    const logIn = useCallback(() => {
+    const currentUser = JSON.parse(localStorage.getItem('user'));
+    const [user, setUser] = useState(currentUser ? { username: currentUser.username } : null);
+
+
+    const logIn = (userData) => {
         setLoggedIn(true);
-    }, []);
+        setUser(userData)
+    }
+
+
 
     const getAuthHeader = useCallback(() => {
         const user = JSON.parse(localStorage.getItem('user'))
@@ -20,7 +27,7 @@ const AuthProvider = ({ children }) => {
         return {}
     }, [])
 
-    const value = React.useMemo(() => ({ loggedIn, logIn, getAuthHeader }), [loggedIn, logIn])
+    const value = React.useMemo(() => ({ loggedIn, logIn, getAuthHeader, user }), [loggedIn, logIn])
 
 
     return (

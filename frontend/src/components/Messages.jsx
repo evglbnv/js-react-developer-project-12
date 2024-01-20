@@ -1,20 +1,50 @@
 /* eslint-disable no-unused-vars */
-import React from "react"
-import { useSelector } from "react-redux"
+import React, { useEffect } from "react"
+import { useSelector, useDispatch } from "react-redux"
 import Form from 'react-bootstrap/Form';
 import { InputGroup } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
 import { useFormik } from 'formik';
+import useAuth from './hooks/useAuth.jsx';
+import { addMessage } from "../store/messagesSlice.js";
+import { fetchMessages } from "../api/fetchApi.js";
+import { webSocket } from "../webSocket/index.js"
+
 
 export const Messages = () => {
 
+    const dispatch = useDispatch();
+    const auth = useAuth()
+    const { user: { username } } = useAuth()
+
+    useEffect(() => {
+        dispatch(fetchMessages(auth.getAuthHeader()));
+    }, [auth, dispatch])
+
     const { messages } = useSelector(state => state.messagesReducer)
-    console.log(messages)
 
     const { currentChannelId, currentChannel } = useSelector(state => state.channelsReducer)
 
+    const { sendMessage } = webSocket()
+
+
     const formik = useFormik({
         initialValues: { body: '' },
+        onSubmit: async ({ body }) => {
+            const message = {
+                body,
+                channelId: currentChannelId,
+                username
+            }
+            try {
+                await sendMessage(message)
+                formik.resetForm();
+            }
+            catch (err) {
+                console.log(err)
+            }
+
+        }
     })
 
     return (
@@ -31,7 +61,7 @@ export const Messages = () => {
                 )}
             </div>
             <div className="row mt-auto pb-2 d-flex justify-content-center">
-                <Form className="col-10">
+                <Form className="col-10" onSubmit={formik.handleSubmit}>
                     <InputGroup>
                         <Form.Control
                             className="col-6"

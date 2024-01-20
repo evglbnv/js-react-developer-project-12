@@ -11,10 +11,9 @@ import {
     messagesReducer
   })
 
-  const store = configureStore({
+  export const store = configureStore({
   reducer: rootReducers,
   middleware: (getDefaultMiddleware) => 
   getDefaultMiddleware()
 })
 
-export default store

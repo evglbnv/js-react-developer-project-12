@@ -20,7 +20,6 @@ const Channels = () => {
         dispatch(fetchChannels(auth.getAuthHeader()));
     }, [auth, dispatch])
 
-    console.log(channels)
 
     return (
         <div className="d-flex flex-column h-100"

@@ -82,7 +82,7 @@ const LoginPage = () => {
         try {
             const response = await axios.post('/api/v1/login', values)
             console.log(response)
-            auth.logIn()
+            auth.logIn(response.data.username)
             localStorage.setItem('user', JSON.stringify(response.data))
             navigate('/')
             inputRef.current.select();

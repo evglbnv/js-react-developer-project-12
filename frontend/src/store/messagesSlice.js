@@ -10,14 +10,18 @@ const initialState = {
 const messagesSlice = createSlice({
     name: 'messages',
     initialState,
-    reducers:{},
+    reducers:{
+        addMessage(state, action) {
+            state.messages.push(action.payload)
+        },
+    },
     extraReducers:(builder) => {
         builder.addCase(fetchMessages.pending, (state)=> {
             state.isLoading = true
         })
-        builder.addCase(fetchMessages.fulfilled, (state, action) => {
+        builder.addCase(fetchMessages.fulfilled, (action, state) => {
             state.isLoading = false,
-            state.messages = action.payload.messages,
+            state.messages = action.payload,
             state.error = ''
         })
 
@@ -28,6 +32,8 @@ const messagesSlice = createSlice({
     }
 })
 
-const {reducer} = messagesSlice
+const {actions, reducer} = messagesSlice
 
 export default reducer
+
+export const { addMessage } = actions
