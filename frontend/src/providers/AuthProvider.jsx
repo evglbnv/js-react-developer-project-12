@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import React, { useCallback, useState } from 'react';
-import AuthContext from '../contexts/AuthContext.js';
+import { AuthContext } from '../contexts/AuthContext.js';
 
 const AuthProvider = ({ children }) => {
 
@@ -14,8 +14,6 @@ const AuthProvider = ({ children }) => {
         setLoggedIn(true);
         setUser(userData)
     }
-
-
 
     const getAuthHeader = useCallback(() => {
         const user = JSON.parse(localStorage.getItem('user'))

@@ -4,8 +4,8 @@ import {
     Row,
     Col,
 } from 'react-bootstrap';
-import Channels from "./Channels";
-import { Messages } from "./Messages";
+import Messages from "./messages/Messages";
+import Channels from "./channels/Channels";
 
 const ChatPage = () => {
 

@@ -1,6 +1,8 @@
-import { createSlice } from "@reduxjs/toolkit";
+/* eslint-disable no-unused-vars */
+import { createSlice, createEntityAdapter} from "@reduxjs/toolkit";
 import {fetchChannels} from "../api/fetchApi";
 
+const channelsAdapter = createEntityAdapter();
 const initialState = {
     channels: [],
     isLoading: false, 

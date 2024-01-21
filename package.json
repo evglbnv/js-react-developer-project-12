@@ -13,6 +13,7 @@
   "license": "ISC",
   "dependencies": {
     "@hexlet/chat-server": "^1.1.8",
+    "react-icons": "^5.0.1",
     "socket.io-client": "^4.7.4"
   },
   "engines": {

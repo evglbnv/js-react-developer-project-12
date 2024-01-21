@@ -25,7 +25,6 @@ export const Messages = () => {
 
     const { currentChannelId, currentChannel } = useSelector(state => state.channelsReducer)
 
-    const { sendMessage } = webSocket()
 
 
     const formik = useFormik({
@@ -37,7 +36,6 @@ export const Messages = () => {
                 username
             }
             try {
-                await sendMessage(message)
                 formik.resetForm();
             }
             catch (err) {

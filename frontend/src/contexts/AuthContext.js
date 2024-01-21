@@ -3,7 +3,8 @@ import {
   } from 'react';
   
   const AuthContext = createContext({});
+  const BackendApiContext = createContext({})
 
  
   
-  export default AuthContext;
+  export  {AuthContext, BackendApiContext};
