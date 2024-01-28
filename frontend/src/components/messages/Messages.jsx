@@ -8,7 +8,9 @@ import { selectMessages } from "../../store/messagesSlice";
 import useAuth from "../hooks/useAuth";
 import { useDispatch } from "react-redux";
 import { fetchMessageData } from "../../api/fetchApi";
-
+import { actions as messagesSlice } from "../../store/messagesSlice"
+import { selectCurrentChannelId } from "../../store/channelsSlice";
+import { currentChannelMessages } from "../../store/messagesSlice";
 
 
 const Messages = () => {
@@ -21,8 +23,16 @@ const Messages = () => {
         dispatch(fetchMessageData(auth.getAuthHeader()))
     }, [])
 
+
     const messages = useSelector(selectMessages)
-    console.log(messages)
+    const currentChannelId = useSelector(selectCurrentChannelId)
+
+    useEffect(() => {
+        dispatch(messagesSlice.addCurrentChannelMessages(currentChannelId))
+    }, [messages])
+
+    const currentMessages = useSelector(currentChannelMessages)
+    console.log(currentMessages)
 
     return (
         <Col className="p-0 h-100">
@@ -38,7 +48,7 @@ const Messages = () => {
                 <div id="messges-box" className="chat-messages overflow-auto px-5">
                     <Message />
                     <ul className="list-unstyled">
-                        {messages.map((message) => (
+                        {currentMessages.map((message) => (
                             <li className="text-break mb-4" key={message.id}>
                                 <Message
                                     key={message.id}

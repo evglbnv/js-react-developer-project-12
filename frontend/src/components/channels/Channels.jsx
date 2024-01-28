@@ -4,10 +4,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { BsPlusSquare } from "react-icons/bs";
 import { Col, Button, Nav } from "react-bootstrap";
 import Channel from "./Channel";
-import { selectChannels } from "../../store/channelsSlice";
+import { selectChannels, selectCurrentChannelId } from "../../store/channelsSlice";
 import useAuth from "../hooks/useAuth";
 import axios from "axios";
 import { fetchChannels } from "../../api/fetchApi";
+
+
 
 const Channels = () => {
 
@@ -19,11 +21,11 @@ const Channels = () => {
     }, [])
 
     const channels = useSelector(selectChannels);
+    const currentChannelId = useSelector(selectCurrentChannelId)
 
 
 
-
-    // const list = axios.get('/api/v1/data', {
+    // axios.get('/api/v1/data', {
     //     headers: {
     //         Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTcwNjM2MTM4M30.ouJSsOdXILDYa9hM63P7ErmgT5s9UP3UwQNQcoO50hA`,
     //     },

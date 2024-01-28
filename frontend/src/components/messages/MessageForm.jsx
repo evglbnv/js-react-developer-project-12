@@ -9,16 +9,16 @@ import useAuth from "../hooks/useAuth";
 import * as Yup from 'yup';
 import { actions as messagesSlice } from "../../store/messagesSlice"
 import { webSocket } from '../../webSocket/index'
+import { selectCurrentChannelId } from "../../store/channelsSlice";
 
 const MessageForm = (props) => {
 
     const { username } = props
-    console.log(username)
     const { sendMessage } = webSocket()
 
     const dispatch = useDispatch()
     const auth = useAuth();
-    console.log(auth.user.username)
+    const currentChannelId = useSelector(selectCurrentChannelId)
 
     // const handleFormSubmit = (values) => {
     //     const message = {
@@ -36,7 +36,8 @@ const MessageForm = (props) => {
         onSubmit: async (values) => {
             const message = {
                 body: values.body,
-                username: auth.user.username
+                username: auth.user.username,
+                channelID: currentChannelId,
             };
             try { await sendMessage(message) }
             catch (err) {

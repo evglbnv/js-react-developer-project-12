@@ -3,9 +3,6 @@ import { createSlice, createEntityAdapter, createAsyncThunk} from "@reduxjs/tool
 import axios from 'axios';
 import { fetchChannels } from "../api/fetchApi";
 
-
-const defaultChannelId = 1;
-
 // const initialState = channelsAdapter.getInitialState({
 //     channels: [],
 //     loadingStatus: 'notLoaded', 
@@ -17,13 +14,17 @@ const channelsSlice = createSlice({
     name: 'channelsInfo',
     initialState: {
     channels: [],
-    currentChannelId: null,
+    currentChannelId: 1,
     processState: {
     status: 'loading',
     error: null,
     },
 },
-    reducers: {},
+    reducers: {
+      setCurrentChannel: (state, {payload}) => {
+        state.currentChannelId = payload
+      },
+    },
     extraReducers: (builder) => {
         builder
         .addCase(fetchChannels.pending, (state) => {
@@ -45,5 +46,9 @@ const channelsSlice = createSlice({
 // export const selectChannels = (state) => state.channelsInfo.channels;
 
 export const selectChannels = (state) => state.channelsInfo.channels;
+
+export const selectCurrentChannelId = (state) => state.channelsInfo.currentChannelId
+
+export const {actions} = channelsSlice
 
 export default channelsSlice.reducer;

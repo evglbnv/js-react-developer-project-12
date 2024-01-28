@@ -7,17 +7,30 @@ import { channelsSelectors } from "../../store/channelsSlice";
 import useAuth from "../hooks/useAuth";
 import { fetchChannels } from "../../api/fetchApi";
 import { fetchInitialData } from "../../store/channelsSlice";
+import { actions as channelsSlice } from "../../store/channelsSlice"
+import { actions as messagesSlice } from "../../store/messagesSlice"
+import { selectCurrentChannelId } from "../../store/channelsSlice"
 
 const Channel = ({ channel }) => {
 
+    const dispatch = useDispatch();
     const { id, name, removable } = channel
 
+    const currentChannelId = useSelector(selectCurrentChannelId)
+
+    const handleChooseChannel = (channelID) => {
+        dispatch(channelsSlice.setCurrentChannel(channelID))
+        dispatch(messagesSlice.addCurrentChannelMessages(channelID))
+
+    }
 
     return (
         <li className="nav-item w-100">
             <Button
-                variant="secondary"
-                className="btn w-100 rounded-0 text-start">
+                variant={id === currentChannelId ? 'secondary' : 'light'}
+                className="btn w-100 rounded-0 text-start"
+                onClick={() => handleChooseChannel(id)}
+            >
                 {name}
             </Button>
         </li>
