@@ -1,12 +1,13 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
-import React from "react";
+import React, { useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import ChatPage from "./ChatPage";
 import LoginPage from "./LoginPage";
 import NotFoundPage from "./NotFoundPage";
 import useAuth from "./hooks/useAuth";
 
-// import axios from 'axios';
+import axios from 'axios';
 
 const PrivateRoute = ({ children }) => {
     const auth = useAuth();
@@ -26,7 +27,7 @@ const AuthRoute = ({ children }) => {
 const App = () => {
 
     // useEffect(() => {
-    //     axios.post('/api/v1/signup', { username: 'zhenya', password: '14881488' }).then((response) => {
+    //     axios.post('/api/v1/signup', { username: 'evglbnv', password: '141414' }).then((response) => {
     //         console.log(response.data); // => { token: ..., username: 'newuser' }
     //     });
     // })

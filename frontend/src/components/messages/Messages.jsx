@@ -10,10 +10,9 @@ import { useDispatch } from "react-redux";
 import { fetchMessageData } from "../../api/fetchApi";
 
 
+
 const Messages = () => {
-
     // const messages = useSelector(selectActiveChannelMessages)
-
     const auth = useAuth();
     console.log(auth)
     const dispatch = useDispatch()
@@ -30,9 +29,9 @@ const Messages = () => {
             <div className="d-flex flex-column h-100">
                 <div className="bg-light mb-4 p-3 shadow-sm small">
                     <p className="m-0">
-                        <b>
-                            # General
-                        </b>
+                        <strong>
+                            #General
+                        </strong>
                     </p>
                     <span className="text-muted">Number of messages</span>
                 </div>
@@ -42,6 +41,7 @@ const Messages = () => {
                         {messages.map((message) => (
                             <li className="text-break mb-4" key={message.id}>
                                 <Message
+                                    key={message.id}
                                     username={message.username}
                                     body={message.body}
                                 />
@@ -50,7 +50,7 @@ const Messages = () => {
                     </ul>
                     <div className="scroll-marker" />
                 </div>
-                <MessageForm />
+                <MessageForm currentUser={auth.username} />
             </div>
         </Col>
     )

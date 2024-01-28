@@ -8,19 +8,20 @@ const Message = (props) => {
 
     const author = (
         <div className="small text-dark">
-            <b>Admin</b>
+            <strong>{username}</strong>
         </div>
     )
 
     return (
         <div className="d-flex mb-2 justify-content-start">
             <div>
-                {username}
+                {author}
                 <div className="p-3 py-2 text-break">
                     {body}
                 </div>
             </div>
         </div>
+
     )
 
 }

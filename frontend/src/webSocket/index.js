@@ -1,12 +1,12 @@
 /* eslint-disable no-unused-vars */
 import {io} from 'socket.io-client'
-import {store} from '../store/index'
-import { addMessage } from '../store/messagesSlice';
+import store from '../store/index'
+import { actions as messagesSlice } from '../store/messagesSlice';
 
 const socket = io();
 
 socket.on('newMessage', (payload) => {
-    store.dispatch(addMessage(payload))
+    store.dispatch(messagesSlice.sendMessage(payload))
 })
 
 export const webSocket = () => {
@@ -20,5 +20,5 @@ export const webSocket = () => {
         })
     }
 
-    return {sendMessage}
+    return { sendMessage }
 }

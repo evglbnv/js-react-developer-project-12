@@ -1,17 +1,47 @@
+/* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
 import React, { useRef, useEffect } from "react";
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Form, Button } from 'react-bootstrap';
 import { BsArrowRightSquare } from 'react-icons/bs';
 import { useFormik } from 'formik';
 import useAuth from "../hooks/useAuth";
 import * as Yup from 'yup';
-const MessageForm = () => {
+import { actions as messagesSlice } from "../../store/messagesSlice"
+import { webSocket } from '../../webSocket/index'
+
+const MessageForm = (props) => {
+
+    const { username } = props
+    console.log(username)
+    const { sendMessage } = webSocket()
+
+    const dispatch = useDispatch()
     const auth = useAuth();
+    console.log(auth.user.username)
+
+    // const handleFormSubmit = (values) => {
+    //     const message = {
+    //         body: values.body,
+    //         username: currentUser
+    //     }
+    //     dispatch(messagesSlice.sendMessage(message))
+    //     formik.resetForm()
+    // }
 
     const formik = useFormik({
         initialValues: {
             body: '',
+        },
+        onSubmit: async (values) => {
+            const message = {
+                body: values.body,
+                username: auth.user.username
+            };
+            try { await sendMessage(message) }
+            catch (err) {
+                console.log(err)
+            }
         },
         validationSchema: Yup.object({
             body: Yup.string()
@@ -25,6 +55,7 @@ const MessageForm = () => {
             <Form
                 noValidate
                 className="py-1 border-2"
+                onSubmit={formik.handleSubmit}
             >
                 <Form.Group className="input-group has-validation">
                     <Form.Control

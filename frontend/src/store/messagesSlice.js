@@ -9,7 +9,11 @@ const messagesSlice = createSlice({
     initialState: {
         messages: [],
     },
-    reducers: {},
+    reducers: {
+        sendMessage: (state, {payload}) => {
+            state.messages.push(payload)
+        }
+    },
     extraReducers: (builder) => {
         builder.addCase(fetchMessageData.fulfilled, (state, action) => {
             state.messages = action.payload.messages
@@ -17,5 +21,7 @@ const messagesSlice = createSlice({
     },
 })
 export const selectMessages = (state) => state.messagesInfo.messages
+
+export const {actions} = messagesSlice
 
 export default messagesSlice.reducer
