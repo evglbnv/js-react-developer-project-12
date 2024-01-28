@@ -1,13 +1,29 @@
-import React from "react";
-// import { useSelector } from "react-redux";
+/* eslint-disable no-unused-vars */
+import React, { useEffect } from "react";
+import { useSelector } from "react-redux";
 import { Col } from 'react-bootstrap';
 import MessageForm from "./MessageForm";
 import Message from "./Message";
+import { selectMessages } from "../../store/messagesSlice";
+import useAuth from "../hooks/useAuth";
+import { useDispatch } from "react-redux";
+import { fetchMessageData } from "../../api/fetchApi";
 
 
 const Messages = () => {
 
-    // const { messages } = useSelector(state => state.messagesReducer)
+    // const messages = useSelector(selectActiveChannelMessages)
+
+    const auth = useAuth();
+    console.log(auth)
+    const dispatch = useDispatch()
+
+    useEffect(() => {
+        dispatch(fetchMessageData(auth.getAuthHeader()))
+    }, [])
+
+    const messages = useSelector(selectMessages)
+    console.log(messages)
 
     return (
         <Col className="p-0 h-100">
@@ -22,6 +38,16 @@ const Messages = () => {
                 </div>
                 <div id="messges-box" className="chat-messages overflow-auto px-5">
                     <Message />
+                    <ul className="list-unstyled">
+                        {messages.map((message) => (
+                            <li className="text-break mb-4" key={message.id}>
+                                <Message
+                                    username={message.username}
+                                    body={message.body}
+                                />
+                            </li>
+                        ))}
+                    </ul>
                     <div className="scroll-marker" />
                 </div>
                 <MessageForm />

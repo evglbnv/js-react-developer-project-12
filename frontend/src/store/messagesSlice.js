@@ -1,24 +1,21 @@
 /* eslint-disable no-unused-vars */
-import { createSlice } from "@reduxjs/toolkit";
-import { fetchMessages } from "../api/fetchApi";
+import {createSlice, createSelector, createAsyncThunk} from '@reduxjs/toolkit'
+import axios from 'axios';
+import { fetchMessageData } from '../api/fetchApi';
 
-const initialState = {
-    messages:[],
-}
 
 const messagesSlice = createSlice({
-    name: 'messages',
-    initialState,
-    reducers:{
-        
+    name: 'messagesInfo',
+    initialState: {
+        messages: [],
     },
-    extraReducers:(builder) => {
-        
-    }
+    reducers: {},
+    extraReducers: (builder) => {
+        builder.addCase(fetchMessageData.fulfilled, (state, action) => {
+            state.messages = action.payload.messages
+        })
+    },
 })
+export const selectMessages = (state) => state.messagesInfo.messages
 
-const {actions, reducer} = messagesSlice
-
-export default reducer
-
-export const { addMessage } = actions
+export default messagesSlice.reducer

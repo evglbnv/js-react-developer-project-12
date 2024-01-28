@@ -1,37 +1,49 @@
 /* eslint-disable no-unused-vars */
-import { createSlice, createEntityAdapter} from "@reduxjs/toolkit";
-import {fetchChannels} from "../api/fetchApi";
+import { createSlice, createEntityAdapter, createAsyncThunk} from "@reduxjs/toolkit";
+import axios from 'axios';
+import { fetchChannels } from "../api/fetchApi";
 
-const channelsAdapter = createEntityAdapter();
-const initialState = {
-    channels: [],
-    isLoading: false, 
-    currentChannelId: 1,
-    currentChannel:{},
-    error: '',
-}
+
+const defaultChannelId = 1;
+
+// const initialState = channelsAdapter.getInitialState({
+//     channels: [],
+//     loadingStatus: 'notLoaded', 
+//     currentChannelId: defaultChannelId,
+//     error: null,
+// })
 
 const channelsSlice = createSlice({
-    name: 'channels',
-    initialState,
+    name: 'channelsInfo',
+    initialState: {
+    channels: [],
+    currentChannelId: null,
+    processState: {
+    status: 'loading',
+    error: null,
+    },
+},
     reducers: {},
     extraReducers: (builder) => {
-        builder.addCase(fetchChannels.pending, (state) => {
-            state.isLoading = true
+        builder
+        .addCase(fetchChannels.pending, (state) => {
+          state.processState.status = 'loading';
+          state.processState.error = null;
         })
-
-        builder.addCase(fetchChannels.fulfilled, (state,action) => {
-            state.isLoading = false,
-            state.channels = action.payload,
-            state.error = ''
-        })
-
-        builder.addCase(fetchChannels.rejected, (state, action) => {
-            state.isLoading = false,
-            state.error = action.payload
-        })
-    }
+        .addCase(fetchChannels.fulfilled, (state, { payload }) => {
+            state.channels = payload.channels;
+            state.currentChannelId = payload.currentChannelId;
+            state.processState.status = 'success';
+          })
+        .addCase(fetchChannels.rejected, (state, { error }) => {
+          state.processState.status = 'error';
+          state.processState.error = error.message;
+        });
+    },
 })
 
-const {reducer} = channelsSlice;
-export default reducer;
+// export const selectChannels = (state) => state.channelsInfo.channels;
+
+export const selectChannels = (state) => state.channelsInfo.channels;
+
+export default channelsSlice.reducer;

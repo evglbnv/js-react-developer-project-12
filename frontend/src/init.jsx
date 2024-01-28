@@ -4,7 +4,7 @@ import { I18nextProvider, initReactI18next } from 'react-i18next';
 import App from './components/App.jsx';
 import resources from './locales/index.js';
 import AuthProvider from './providers/AuthProvider.jsx';
-import { store } from '../src/store/index.js'
+import store from '../src/store/index.js'
 import { Provider } from 'react-redux';
 
 const init = async () => {
