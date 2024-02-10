@@ -30,9 +30,12 @@ export const webSocket = () => {
             if (err) {
                 console.log(err)
             }
-            console.log(response)
+            const {status, data} = response
+            console.log(status)
+            console.log(data)
+
         } )
     }
 
-    return { sendMessage }
+    return { sendMessage, createChannel }
 }

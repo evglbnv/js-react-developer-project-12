@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import React from "react";
+import React, { useRef } from "react";
 import { useFormik } from "formik";
 import { Button, Form, Modal } from 'react-bootstrap'
 import { useSelector } from "react-redux";
@@ -11,12 +11,14 @@ const AddChannelModal = () => {
 
     const { createChannel } = webSocket();
 
+    const inputRef = useRef(null);
+
     const allChannels = useSelector(selectChannels)
 
     const blackList = allChannels.map((channel) => channel.name)
 
     const validationSchema = Yup.object().shape({
-        channelName: Yup.string()
+        name: Yup.string()
             .trim()
             .required('Обязательное поле')
             .min(3, 'От 3 до 20 символов')
@@ -27,14 +29,15 @@ const AddChannelModal = () => {
 
     const formik = useFormik({
         initialValues: {
-            channelName: '',
+            name: '',
         },
         validationSchema,
         validateOnChange: false,
-        onSubmit: async ({ newChannelName }) => {
-            const name = { newChannelName }
+        onSubmit: async ({ name }) => {
+            const channel = { name }
             try {
-                await createChannel({ name })
+                await
+                    createChannel(channel)
                 formik.resetForm()
             } catch (err) {
                 console.error(err)
@@ -51,8 +54,15 @@ const AddChannelModal = () => {
             <Modal.Body>
                 <Form onSubmit={formik.handleSubmit}>
                     <Form.Floating className="mb-2">
-                        <Form.Control className="mb-2" />
-                        <Form.Label>123</Form.Label>
+                        <Form.Control
+                            className="mb-2"
+                            name="name"
+                            type="text"
+                            value={formik.values.name || ''}
+                            onChange={formik.handleChange}
+                            ref={inputRef}
+                        />
+                        {/* <Form.Label>123</Form.Label> */}
                     </Form.Floating>
                     <Modal.Footer>
                         <Button variant="secondary" type="button" >Отменить</Button>
