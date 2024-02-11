@@ -26,6 +26,10 @@ const channelsSlice = createSlice({
       },
       addChannel: (state, {payload}) => {
         state.channels.push(payload)
+      },
+      deleteChannel(state, action) {
+        state.channels = state.channels.filter(channel => channel.id !== action.payload)
+        state.currentChannelId = 1
       }
     },
     extraReducers: (builder) => {

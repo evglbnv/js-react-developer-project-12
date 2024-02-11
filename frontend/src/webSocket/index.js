@@ -14,6 +14,10 @@ socket.on('newChannel', (payload) => {
     store.dispatch(channelsSlice.addChannel(payload))
 })
 
+socket.on('removeChannel', (payload) => {
+    store.dispatch(channelsSlice.deleteChannel(payload))
+})
+
 export const webSocket = () => {
 
     const sendMessage = (message) => {
@@ -35,7 +39,18 @@ export const webSocket = () => {
             console.log(data)
 
         } )
+  
     }
 
-    return { sendMessage, createChannel }
+    const removeChannel = (id) => {
+        socket.timeout(3000).emit('removeChannel', id, (err, response) => {
+            if (err) {
+                console.log(err)
+            } else {
+                console.log(response.status)
+            }
+        })
+    }
+
+    return { sendMessage, createChannel, removeChannel }
 }
