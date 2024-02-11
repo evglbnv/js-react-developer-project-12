@@ -8,7 +8,8 @@ import { selectChannels, selectCurrentChannelId } from "../../store/channelsSlic
 import useAuth from "../hooks/useAuth";
 import axios from "axios";
 import { fetchChannels } from "../../api/fetchApi";
-
+import { modalActions } from "../../store/modalSlice";
+import ChannelsModal from "../modals/ChannelsModal";
 
 
 const Channels = () => {
@@ -22,7 +23,7 @@ const Channels = () => {
 
     const channels = useSelector(selectChannels);
     const currentChannelId = useSelector(selectCurrentChannelId)
-
+    const handleAddChannelModal = () => dispatch(modalActions.showModal({ type: 'addChannel' }))
 
 
     // axios.get('/api/v1/data', {
@@ -42,7 +43,9 @@ const Channels = () => {
                     <b>Каналы</b>
                     <Button
                         variant="group-vertical"
-                        className="p-0 text-primary">
+                        className="p-0 text-primary"
+                        onClick={handleAddChannelModal}
+                    >
                         <BsPlusSquare />
                         <span className="visually-hidden">+</span>
                     </Button>
@@ -59,6 +62,7 @@ const Channels = () => {
                     ))}
                 </Nav>
             </Col>
+            <ChannelsModal />
         </>
     )
 }

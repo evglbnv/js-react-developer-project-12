@@ -1,6 +1,5 @@
 /* eslint-disable no-unused-vars */
 import { createSlice } from "@reduxjs/toolkit";
-import channelsSlice from "./channelsSlice";
 
 const initialState = {
     isOpen: false,
@@ -18,7 +17,7 @@ const modalSlice = createSlice({
             state.data = payload.data
         },
         hideModal: (state) => {
-            state.isOpened = false;
+            state.isOpen = false;
             state.type = null;
             state.data = null;
         }
@@ -26,12 +25,12 @@ const modalSlice = createSlice({
 })
 
 export const modalSelectors = {
-    getState: (state) => state.modal,
-    isOpen: (state) => state.modal.isOpen,
-    getType: (state) => state.modal.type,
-    getData: (state) => state.modal.data
+    getState: (state) => state.modalInfo,
+    isOpen: (state) => state.modalInfo.isOpen,
+    getType: (state) => state.modalInfo.type,
+    getData: (state) => state.modalInfo.data
 }
 
-export const { actions } = channelsSlice
+export const modalActions = modalSlice.actions;
 
 export default modalSlice.reducer
