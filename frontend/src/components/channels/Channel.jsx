@@ -24,6 +24,29 @@ const Channel = ({ channel }) => {
 
     }
 
+    if (removable) {
+        return (
+            <Nav.Item key={id} as="li" className="w-100">
+                <Dropdown className="d-flex btn-group">
+                    <Button>{name}</Button>
+                    <Dropdown.Toggle
+                        className="flex-grow-0 dropdown-toggle-split"
+                    >
+                        <span className="visually-hidden">Управление каналом</span>
+                    </Dropdown.Toggle>
+                    <Dropdown.Menu>
+                        <Dropdown.Item>
+                            Удалить
+                        </Dropdown.Item>
+                        <Dropdown.Item>
+                            Переименовать
+                        </Dropdown.Item>
+                    </Dropdown.Menu>
+                </Dropdown>
+            </Nav.Item>
+        )
+    }
+
     return (
         <li className="nav-item w-100">
             <Button
