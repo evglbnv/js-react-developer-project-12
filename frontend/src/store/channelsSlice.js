@@ -56,6 +56,9 @@ export const selectChannels = (state) => state.channelsInfo.channels;
 
 export const selectCurrentChannelId = (state) => state.channelsInfo.currentChannelId
 
+export const selectActiveChannel = (state) => state.channelsInfo.channels
+.find((channel) => channel.id === state.channelsInfo.currentChannelId)
+
 export const {actions} = channelsSlice
 
 export default channelsSlice.reducer;

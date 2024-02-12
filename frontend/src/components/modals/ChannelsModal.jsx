@@ -5,9 +5,11 @@ import { Modal } from "react-bootstrap";
 import AddChannelModal from "./AddChannel"
 
 import { modalActions, modalSelectors } from "../../store/modalSlice";
+import RemoveChannel from "./RemoveModal";
 
 const modals = {
     addChannel: AddChannelModal,
+    removeChannel: RemoveChannel,
 }
 
 const ChannelsModal = () => {

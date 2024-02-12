@@ -16,9 +16,11 @@ const MessageForm = (props) => {
     const { username } = props
     const { sendMessage } = webSocket()
 
+
     const dispatch = useDispatch()
     const auth = useAuth();
     const currentChannelId = useSelector(selectCurrentChannelId)
+
 
     // const handleFormSubmit = (values) => {
     //     const message = {

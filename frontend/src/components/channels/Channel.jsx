@@ -10,6 +10,7 @@ import { fetchInitialData } from "../../store/channelsSlice";
 import { actions as channelsSlice } from "../../store/channelsSlice"
 import { actions as messagesSlice } from "../../store/messagesSlice"
 import { selectCurrentChannelId } from "../../store/channelsSlice"
+import { modalActions } from "../../store/modalSlice";
 
 const Channel = ({ channel }) => {
 
@@ -21,14 +22,22 @@ const Channel = ({ channel }) => {
     const handleChooseChannel = (channelID) => {
         dispatch(channelsSlice.setCurrentChannel(channelID))
         dispatch(messagesSlice.addCurrentChannelMessages(channelID))
-
     }
+
+    const handleDeleteChannelModal = () => dispatch(
+        modalActions.showModal({ type: 'renameChannel', data: { id, name } })
+    )
 
     if (removable) {
         return (
             <Nav.Item key={id} as="li" className="w-100">
                 <Dropdown className="d-flex btn-group">
-                    <Button>{name}</Button>
+                    <Button
+                        variant={id === currentChannelId ? 'secondary' : 'light'}
+                        onClick={() => handleChooseChannel(id)}
+                    >
+                        {name}
+                    </Button>
                     <Dropdown.Toggle
                         className="flex-grow-0 dropdown-toggle-split"
                     >

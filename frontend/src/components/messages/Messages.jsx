@@ -9,9 +9,9 @@ import useAuth from "../hooks/useAuth";
 import { useDispatch } from "react-redux";
 import { fetchMessageData } from "../../api/fetchApi";
 import { actions as messagesSlice } from "../../store/messagesSlice"
-import { selectCurrentChannelId } from "../../store/channelsSlice";
+import { selectCurrentChannelId, selectActiveChannel } from "../../store/channelsSlice";
 import { currentChannelMessages } from "../../store/messagesSlice";
-
+import { selectChannels } from "../../store/channelsSlice";
 
 const Messages = () => {
     // const messages = useSelector(selectActiveChannelMessages)
@@ -23,9 +23,10 @@ const Messages = () => {
         dispatch(fetchMessageData(auth.getAuthHeader()))
     }, [])
 
-
     const messages = useSelector(selectMessages)
     const currentChannelId = useSelector(selectCurrentChannelId)
+    const activeChannel = useSelector(selectActiveChannel)
+    const { name } = activeChannel
 
     useEffect(() => {
         dispatch(messagesSlice.addCurrentChannelMessages(currentChannelId))
@@ -40,7 +41,7 @@ const Messages = () => {
                 <div className="bg-light mb-4 p-3 shadow-sm small">
                     <p className="m-0">
                         <strong>
-                            #General
+                            {name}
                         </strong>
                     </p>
                     <span className="text-muted">Number of messages</span>
