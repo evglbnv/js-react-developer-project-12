@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
 import React from "react";
 
@@ -6,13 +7,20 @@ import { Modal, Button } from "react-bootstrap";
 import { modalSelectors } from "../../store/modalSlice";
 import { webSocket } from "../../webSocket";
 
-const RemoveChannel = () => {
+const RemoveChannel = ({ onHide }) => {
 
     const { removeChannel } = webSocket()
     const { id } = useSelector(modalSelectors.getData)
 
     const handleRemoveChannel = async (e) => {
         e.preventDefault()
+
+        try {
+            await removeChannel({ id })
+            onHide()
+        } catch (err) {
+            console.error(err)
+        }
     }
 
     return (
@@ -23,8 +31,8 @@ const RemoveChannel = () => {
             <Modal.Body>
                 <p>Вы точно хотите удалить?</p>
                 <Modal.Footer>
-                    <Button variant="secondary" type="button">Отменить</Button>
-                    <Button variant="danger" type="button" >Удалить</Button>
+                    <Button variant="secondary" type="button" onClick={onHide}>Отменить</Button>
+                    <Button variant="danger" type="button" onClick={handleRemoveChannel}>Удалить</Button>
                 </Modal.Footer>
             </Modal.Body>
         </>

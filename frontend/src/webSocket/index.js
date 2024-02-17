@@ -18,6 +18,13 @@ socket.on('removeChannel', (payload) => {
     store.dispatch(channelsSlice.deleteChannel(payload))
 })
 
+socket.on('renameChannel', (payload) => {
+    console.log(payload)
+    store.dispatch(channelsSlice.renameChannel({
+      payload
+    }))
+})
+
 export const webSocket = () => {
 
     const sendMessage = (message) => {
@@ -52,5 +59,16 @@ export const webSocket = () => {
         })
     }
 
-    return { sendMessage, createChannel, removeChannel }
+    const renameChannel = (channel) => {
+        socket.timeout(3000).emit('renameChannel', channel, (err, response) => {
+            if (err) {
+                console.log(err)
+            }
+            const {status, data} = response
+            console.log(status)
+            console.log(data)
+        })
+    }
+
+    return { sendMessage, createChannel, removeChannel, renameChannel }
 }

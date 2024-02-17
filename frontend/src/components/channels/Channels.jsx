@@ -5,9 +5,9 @@ import { BsPlusSquare } from "react-icons/bs";
 import { Col, Button, Nav } from "react-bootstrap";
 import Channel from "./Channel";
 import { selectChannels, selectCurrentChannelId } from "../../store/channelsSlice";
-import useAuth from "../hooks/useAuth";
+
 import axios from "axios";
-import { fetchChannels } from "../../api/fetchApi";
+
 import { modalActions } from "../../store/modalSlice";
 import ChannelsModal from "../modals/ChannelsModal";
 
@@ -15,14 +15,11 @@ import ChannelsModal from "../modals/ChannelsModal";
 const Channels = () => {
 
     const dispatch = useDispatch();
-    const auth = useAuth();
 
-    useEffect(() => {
-        dispatch(fetchChannels(auth.getAuthHeader()))
-    }, [])
 
     const channels = useSelector(selectChannels);
     const currentChannelId = useSelector(selectCurrentChannelId)
+
     const handleAddChannelModal = () => dispatch(modalActions.showModal({ type: 'addChannel' }))
 
 

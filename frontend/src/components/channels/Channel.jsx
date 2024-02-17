@@ -28,6 +28,10 @@ const Channel = ({ channel }) => {
         modalActions.showModal({ type: 'removeChannel', data: { id } })
     )
 
+    const handleRenameModal = () => dispatch(
+        modalActions.showModal({ type: 'renameChannel', data: { id, name } })
+    )
+
     if (removable) {
         return (
             <Nav.Item key={id} as="li" className="w-100">
@@ -44,10 +48,10 @@ const Channel = ({ channel }) => {
                         <span className="visually-hidden">Управление каналом</span>
                     </Dropdown.Toggle>
                     <Dropdown.Menu>
-                        <Dropdown.Item onClick={() => { handleDeleteChannelModal() }}>
+                        <Dropdown.Item onClick={handleDeleteChannelModal}>
                             Удалить
                         </Dropdown.Item>
-                        <Dropdown.Item>
+                        <Dropdown.Item onClick={handleRenameModal}>
                             Переименовать
                         </Dropdown.Item>
                     </Dropdown.Menu>

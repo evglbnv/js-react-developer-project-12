@@ -27,10 +27,15 @@ const channelsSlice = createSlice({
       addChannel: (state, {payload}) => {
         state.channels.push(payload)
       },
-      deleteChannel(state, action) {
-        state.channels = state.channels.filter(channel => channel.id !== action.payload)
+      deleteChannel: (state, {payload}) => {
+        state.channels = state.channels.filter((channel) => channel.id !== payload)
         state.currentChannelId = 1
-      }
+      },
+      renameChannel: (state, { payload }) => {
+        console.log(payload)
+        const existingChannel = state.channels.find((channel) => channel.id === payload.id);
+        existingChannel.name = payload.name;
+      },
     },
     extraReducers: (builder) => {
         builder

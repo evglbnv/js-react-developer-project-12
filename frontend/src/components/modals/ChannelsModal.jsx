@@ -6,10 +6,12 @@ import AddChannelModal from "./AddChannel"
 
 import { modalActions, modalSelectors } from "../../store/modalSlice";
 import RemoveChannel from "./RemoveModal";
+import RenameChannel from "./RenameChannel";
 
 const modals = {
     addChannel: AddChannelModal,
     removeChannel: RemoveChannel,
+    renameChannel: RenameChannel
 }
 
 const ChannelsModal = () => {

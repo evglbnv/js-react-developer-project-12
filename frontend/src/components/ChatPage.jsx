@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
     Container,
     Row,
@@ -7,8 +7,19 @@ import {
 import Messages from "./messages/Messages";
 import Channels from "./channels/Channels";
 // import AddChannelModal from "./modals/AddChannel";
+import useAuth from "../components/hooks/useAuth";
+import { useDispatch, } from "react-redux";
+import { fetchChannels } from "../api/fetchApi";
 
 const ChatPage = () => {
+
+    const auth = useAuth();
+
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        dispatch(fetchChannels(auth.getAuthHeader()))
+    }, [auth, dispatch])
 
     return (
         <Container className="h-100 my-4 overflow-hidden rounded shadow">

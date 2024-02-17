@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
 import React, { useRef } from "react";
 import { useFormik } from "formik";
@@ -7,7 +8,7 @@ import * as Yup from 'yup'
 import { webSocket } from "../../webSocket";
 import { selectChannels } from "../../store/channelsSlice";
 
-const AddChannelModal = () => {
+const AddChannelModal = ({ onHide }) => {
 
     const { createChannel } = webSocket();
 
@@ -38,6 +39,7 @@ const AddChannelModal = () => {
             try {
                 await
                     createChannel(channel)
+                onHide()
                 formik.resetForm()
             } catch (err) {
                 console.error(err)
