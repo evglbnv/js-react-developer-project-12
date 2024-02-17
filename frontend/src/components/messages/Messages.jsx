@@ -16,7 +16,6 @@ import { selectChannels } from "../../store/channelsSlice";
 const Messages = () => {
     // const messages = useSelector(selectActiveChannelMessages)
     const auth = useAuth();
-    console.log(auth)
     const dispatch = useDispatch()
 
     useEffect(() => {
@@ -26,14 +25,17 @@ const Messages = () => {
     const messages = useSelector(selectMessages)
     const currentChannelId = useSelector(selectCurrentChannelId)
     const activeChannel = useSelector(selectActiveChannel)
-    const { name } = activeChannel
+
+    // const { name } = activeChannel
+
+    console.log(activeChannel)
+
 
     useEffect(() => {
         dispatch(messagesSlice.addCurrentChannelMessages(currentChannelId))
     }, [messages])
 
     const currentMessages = useSelector(currentChannelMessages)
-    console.log(currentMessages)
 
     return (
         <Col className="p-0 h-100">
@@ -41,7 +43,7 @@ const Messages = () => {
                 <div className="bg-light mb-4 p-3 shadow-sm small">
                     <p className="m-0">
                         <strong>
-                            {name}
+                            {activeChannel?.name}
                         </strong>
                     </p>
                     <span className="text-muted">Number of messages</span>

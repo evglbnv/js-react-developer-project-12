@@ -11,13 +11,17 @@ const RemoveChannel = () => {
     const { removeChannel } = webSocket()
     const { id } = useSelector(modalSelectors.getData)
 
+    const handleRemoveChannel = async (e) => {
+        e.preventDefault()
+    }
+
     return (
         <>
             <Modal.Header closeButton>
                 <Modal.Title>Удалить канал</Modal.Title>
             </Modal.Header>
             <Modal.Body>
-                <p>Удалить</p>
+                <p>Вы точно хотите удалить?</p>
                 <Modal.Footer>
                     <Button variant="secondary" type="button">Отменить</Button>
                     <Button variant="danger" type="button" >Удалить</Button>
