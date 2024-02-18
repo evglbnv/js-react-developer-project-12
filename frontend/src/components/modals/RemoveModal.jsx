@@ -6,10 +6,13 @@ import { useSelector } from "react-redux";
 import { Modal, Button } from "react-bootstrap";
 import { modalSelectors } from "../../store/modalSlice";
 import { webSocket } from "../../webSocket";
+import { useBackendApi } from "../hooks/useAuth";
 
 const RemoveChannel = ({ onHide }) => {
 
-    const { removeChannel } = webSocket()
+    // const { removeChannel } = webSocket()
+    const { removeChannel } = useBackendApi();
+
     const { id } = useSelector(modalSelectors.getData)
 
     const handleRemoveChannel = async (e) => {

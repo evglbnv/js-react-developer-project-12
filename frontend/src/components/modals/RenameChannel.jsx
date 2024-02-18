@@ -8,10 +8,11 @@ import * as Yup from 'yup';
 import { selectChannels } from "../../store/channelsSlice";
 import { modalSelectors } from "../../store/modalSlice";
 import { webSocket } from "../../webSocket";
+import { useBackendApi } from "../hooks/useAuth";
 
 const RenameChannel = ({ onHide }) => {
 
-    const { renameChannel } = webSocket()
+    const { renameChannel } = useBackendApi();
     const modalChannel = useSelector(modalSelectors.getData);
 
     console.log(modalChannel)

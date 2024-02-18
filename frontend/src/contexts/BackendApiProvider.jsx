@@ -16,12 +16,12 @@ const BackendApiProvider = ({ children, socket }) => {
         const connectBackend = () => {
             socket.connect();
 
-            socket.on('newMessage', (payload) => {
-                dispatch(messagesSlice.sendMessage(payload))
+            socket.on('newMessage', (messageWithId) => {
+                dispatch(messagesSlice.sendMessage(messageWithId))
             })
 
-            socket.on('newChannel', (payload) => {
-                dispatch(channelsSlice.addChannel(payload))
+            socket.on('newChannel', (channelWithId) => {
+                dispatch(channelsSlice.addChannel(channelWithId))
             })
 
             socket.on('removeChannel', (payload) => {

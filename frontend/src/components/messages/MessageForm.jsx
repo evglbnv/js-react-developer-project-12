@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Form, Button } from 'react-bootstrap';
 import { BsArrowRightSquare } from 'react-icons/bs';
 import { useFormik } from 'formik';
-import { useAuth } from "../hooks/useAuth";
+import { useAuth, useBackendApi } from "../hooks/useAuth";
 import * as Yup from 'yup';
 import { actions as messagesSlice } from "../../store/messagesSlice"
 import { webSocket } from '../../webSocket/index'
@@ -14,7 +14,8 @@ import { selectCurrentChannelId } from "../../store/channelsSlice";
 const MessageForm = (props) => {
 
     const { username } = props
-    const { sendMessage } = webSocket()
+    // const { sendMessage } = webSocket()
+    const { newMessage } = useBackendApi();
 
 
     const dispatch = useDispatch()
@@ -41,7 +42,7 @@ const MessageForm = (props) => {
                 username: auth.user.username,
                 channelID: currentChannelId,
             };
-            try { await sendMessage(message) }
+            try { await newMessage(message) }
             catch (err) {
                 console.log(err)
             }
