@@ -5,7 +5,7 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import ChatPage from "./ChatPage";
 import LoginPage from "./LoginPage";
 import NotFoundPage from "./NotFoundPage";
-import useAuth from "./hooks/useAuth";
+import { useAuth } from "./hooks/useAuth";
 
 import axios from 'axios';
 

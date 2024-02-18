@@ -13,7 +13,7 @@ import FloatingLabel from "react-bootstrap/esm/FloatingLabel";
 import loginImage from '../images/login-image.jpg'
 import Button from 'react-bootstrap/Button';
 // eslint-disable-next-line no-unused-vars
-import useAuth from './hooks/useAuth.jsx';
+import { useAuth } from './hooks/useAuth.jsx';
 import * as Yup from 'yup';
 import { useFormik } from 'formik';
 // import { useEffect } from "react";

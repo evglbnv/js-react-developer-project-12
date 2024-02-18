@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Form, Button } from 'react-bootstrap';
 import { BsArrowRightSquare } from 'react-icons/bs';
 import { useFormik } from 'formik';
-import useAuth from "../hooks/useAuth";
+import { useAuth } from "../hooks/useAuth";
 import * as Yup from 'yup';
 import { actions as messagesSlice } from "../../store/messagesSlice"
 import { webSocket } from '../../webSocket/index'

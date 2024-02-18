@@ -5,7 +5,7 @@ import { Col } from 'react-bootstrap';
 import MessageForm from "./MessageForm";
 import Message from "./Message";
 import { selectMessages } from "../../store/messagesSlice";
-import useAuth from "../hooks/useAuth";
+import { useAuth } from "../hooks/useAuth";
 import { useDispatch } from "react-redux";
 import { fetchMessageData } from "../../api/fetchApi";
 import { actions as messagesSlice } from "../../store/messagesSlice"

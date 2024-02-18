@@ -25,7 +25,7 @@ socket.on('renameChannel', (payload) => {
     }))
 })
 
-export const webSocket = () => {
+const webSocket = () => {
 
     const sendMessage = (message) => {
         socket.timeout(3000).emit('newMessage', message, (err,response) => {

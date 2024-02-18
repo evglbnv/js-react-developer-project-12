@@ -7,10 +7,12 @@ import { useSelector } from "react-redux";
 import * as Yup from 'yup'
 import { webSocket } from "../../webSocket";
 import { selectChannels } from "../../store/channelsSlice";
+import { useBackendApi } from "../hooks/useAuth";
 
 const AddChannelModal = ({ onHide }) => {
 
-    const { createChannel } = webSocket();
+    // const { createChannel } = webSocket();
+    const { newChannel } = useBackendApi()
 
     const inputRef = useRef(null);
 
@@ -38,7 +40,7 @@ const AddChannelModal = ({ onHide }) => {
             const channel = { name }
             try {
                 await
-                    createChannel(channel)
+                    newChannel(channel)
                 onHide()
                 formik.resetForm()
             } catch (err) {

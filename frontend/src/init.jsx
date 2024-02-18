@@ -6,9 +6,14 @@ import resources from './locales/index.js';
 import AuthProvider from './providers/AuthProvider.jsx';
 import store from '../src/store/index.js'
 import { Provider } from 'react-redux';
+import { io } from 'socket.io-client'
+import BackendApiProvider from './contexts/BackendApiProvider.jsx';
+
 
 const init = async () => {
   const i18n = i18next.createInstance();
+
+  const socket = io('/', { autoConnect: false })
 
   await i18n
     .use(initReactI18next)
@@ -20,9 +25,11 @@ const init = async () => {
   return (
     <Provider store={store}>
       <I18nextProvider i18n={i18n}>
-        <AuthProvider>
-          <App />
-        </AuthProvider>
+        <BackendApiProvider socket={socket}>
+          <AuthProvider>
+            <App />
+          </AuthProvider>
+        </BackendApiProvider>
       </I18nextProvider>
     </Provider>
   );
