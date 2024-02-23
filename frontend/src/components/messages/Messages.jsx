@@ -28,8 +28,6 @@ const Messages = () => {
 
     // const { name } = activeChannel
 
-    console.log(activeChannel)
-
 
     useEffect(() => {
         dispatch(messagesSlice.addCurrentChannelMessages(currentChannelId))

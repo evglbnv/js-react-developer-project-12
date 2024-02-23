@@ -15,6 +15,9 @@ const RenameChannel = ({ onHide }) => {
     const { renameChannel } = useBackendApi();
     const modalChannel = useSelector(modalSelectors.getData);
 
+    const { name: currentChannelName, id } = useSelector(modalSelectors.getData);
+    console.log(currentChannelName)
+
     console.log(modalChannel)
 
 
@@ -33,13 +36,13 @@ const RenameChannel = ({ onHide }) => {
     })
 
     const formik = useFormik({
-        initialValues: { name: modalChannel.name },
+        initialValues: { name: currentChannelName },
         validationSchema,
         validateOnChange: false,
         validateOnBlur: false,
         onSubmit: async ({ name }) => {
 
-            const data = { id: modalChannel.id, name }
+            const data = { id: modalChannel.id, name: name }
 
             try {
                 await renameChannel(data)

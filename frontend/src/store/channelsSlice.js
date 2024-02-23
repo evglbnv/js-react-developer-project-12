@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 import { createSlice, createEntityAdapter, createAsyncThunk} from "@reduxjs/toolkit";
 import axios from 'axios';
-import { fetchChannels } from "../api/fetchApi";
+// import { fetchChannels } from "../api/fetchApi";
 
 // const initialState = channelsAdapter.getInitialState({
 //     channels: [],
@@ -9,6 +9,14 @@ import { fetchChannels } from "../api/fetchApi";
 //     currentChannelId: defaultChannelId,
 //     error: null,
 // })
+
+export const fetchChannels = createAsyncThunk(
+  'channels/fetchInitialData',
+  async (token) => {
+    const { data } = await axios.get('/api/v1/data', (token));
+    return data;
+  },
+);
 
 const channelsSlice = createSlice({
     name: 'channelsInfo',
@@ -32,9 +40,8 @@ const channelsSlice = createSlice({
         state.currentChannelId = 1
       },
       renameChannel: (state, { payload }) => {
-        console.log(payload)
-        const existingChannel = state.channels.find((channel) => channel.id === payload.id);
-        existingChannel.name = payload.name;
+        const channel = state.channels.find((channel) => channel.id === payload.id);
+        channel.name = payload.name;
       },
     },
     extraReducers: (builder) => {

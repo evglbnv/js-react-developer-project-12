@@ -11,10 +11,14 @@ import axios from "axios";
 import { modalActions } from "../../store/modalSlice";
 import ChannelsModal from "../modals/ChannelsModal";
 
+import { useAuth } from "../../components/hooks/useAuth";
+import { fetchChannels } from "../../store/channelsSlice";
+
 
 const Channels = () => {
 
     const dispatch = useDispatch();
+    const { getAuthHeader } = useAuth()
 
 
     const channels = useSelector(selectChannels);
@@ -22,6 +26,12 @@ const Channels = () => {
 
     const handleAddChannelModal = () => dispatch(modalActions.showModal({ type: 'addChannel' }))
 
+    useEffect(
+        () => {
+            const header = getAuthHeader();
+            dispatch(fetchChannels(header));
+
+        }, [dispatch, getAuthHeader])
 
     // axios.get('/api/v1/data', {
     //     headers: {

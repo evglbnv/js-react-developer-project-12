@@ -7,19 +7,27 @@ import { Modal, Button } from "react-bootstrap";
 import { modalSelectors } from "../../store/modalSlice";
 import { webSocket } from "../../webSocket";
 import { useBackendApi } from "../hooks/useAuth";
+import { actions as channelsSlice } from "../../store/channelsSlice"
+import { useDispatch } from "react-redux";
+import { useAuth } from "../hooks/useAuth";
+import { fetchChannels } from "../../store/channelsSlice";
 
 const RemoveChannel = ({ onHide }) => {
 
     // const { removeChannel } = webSocket()
     const { removeChannel } = useBackendApi();
-
     const { id } = useSelector(modalSelectors.getData)
+    const dispatch = useDispatch()
+    const { getAuthHeader } = useAuth()
 
     const handleRemoveChannel = async (e) => {
         e.preventDefault()
 
         try {
             await removeChannel({ id })
+            console.log('SUCCESS')
+            const header = getAuthHeader();
+            dispatch(fetchChannels(header))
             onHide()
         } catch (err) {
             console.error(err)
@@ -28,7 +36,7 @@ const RemoveChannel = ({ onHide }) => {
 
     return (
         <>
-            <Modal.Header closeButton>
+            <Modal.Header closeButton onHide={onHide}>
                 <Modal.Title>Удалить канал</Modal.Title>
             </Modal.Header>
             <Modal.Body>

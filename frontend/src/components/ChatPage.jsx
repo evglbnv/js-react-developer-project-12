@@ -9,11 +9,14 @@ import Channels from "./channels/Channels";
 // import AddChannelModal from "./modals/AddChannel";
 import { useAuth, useBackendApi } from "../components/hooks/useAuth";
 import { useDispatch, } from "react-redux";
-import { fetchChannels } from "../api/fetchApi";
+import { fetchChannels } from "../../src/store/channelsSlice";
 
 const ChatPage = () => {
 
     const auth = useAuth();
+    console.log(auth)
+    const { getAuthHeader } = useAuth()
+
     const { connectBackend, disconnectBackend } = useBackendApi()
 
     const dispatch = useDispatch();
@@ -22,13 +25,15 @@ const ChatPage = () => {
     //     dispatch(fetchChannels(auth.getAuthHeader()))
     // }, [auth, dispatch])
 
-    useEffect(() => {
-        dispatch(fetchChannels(auth.getAuthHeader()))
-        connectBackend();
-        return () => {
-            disconnectBackend()
-        };
-    }, [dispatch, auth, connectBackend, disconnectBackend])
+    useEffect(
+        () => {
+            const header = getAuthHeader();
+            dispatch(fetchChannels(header));
+            connectBackend();
+            return () => {
+                disconnectBackend()
+            };
+        }, [dispatch, getAuthHeader, connectBackend, disconnectBackend])
 
     return (
         <Container className="h-100 my-4 overflow-hidden rounded shadow">

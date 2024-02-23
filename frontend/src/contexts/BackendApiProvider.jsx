@@ -24,15 +24,12 @@ const BackendApiProvider = ({ children, socket }) => {
                 dispatch(channelsSlice.addChannel(channelWithId))
             })
 
-            socket.on('removeChannel', (payload) => {
-                dispatch(channelsSlice.deleteChannel(payload))
+            socket.on('removeChannel', ({ payload }) => {
+                dispatch(channelsSlice.deleteChannel({ payload }))
             })
 
-            socket.on('renameChannel', (payload) => {
-                console.log(payload)
-                dispatch(channelsSlice.renameChannel({
-                    payload
-                }))
+            socket.on('renameChannel', (channel) => {
+                dispatch(channelsSlice.renameChannel(channel))
             })
         }
 

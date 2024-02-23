@@ -67,7 +67,7 @@ const App = () => {
             <Router>
                 <Routes>
                     <Route path="/login" element={<AuthRoute><LoginPage /></AuthRoute>} />
-                    <Route path="/" element={<PrivateRoute>≈<ChatPage /></PrivateRoute>} />
+                    <Route path="/" element={<PrivateRoute><ChatPage /></PrivateRoute>} />
                     <Route path="*" element={<NotFoundPage />} />
                 </Routes>
             </Router>
