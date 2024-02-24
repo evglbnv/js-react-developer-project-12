@@ -4,9 +4,6 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Button, Dropdown, Nav } from 'react-bootstrap';
 import { channelsSelectors } from "../../store/channelsSlice";
-import useAuth from "../hooks/useAuth";
-import { fetchChannels } from "../../api/fetchApi";
-import { fetchInitialData } from "../../store/channelsSlice";
 import { actions as channelsSlice } from "../../store/channelsSlice"
 import { actions as messagesSlice } from "../../store/messagesSlice"
 import { selectCurrentChannelId } from "../../store/channelsSlice"

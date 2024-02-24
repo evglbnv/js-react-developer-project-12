@@ -5,13 +5,11 @@ import { useFormik } from "formik";
 import { Button, Form, Modal } from 'react-bootstrap'
 import { useSelector } from "react-redux";
 import * as Yup from 'yup'
-import { webSocket } from "../../webSocket";
 import { selectChannels } from "../../store/channelsSlice";
 import { useBackendApi } from "../hooks/useAuth";
 
 const AddChannelModal = ({ onHide }) => {
 
-    // const { createChannel } = webSocket();
     const { newChannel } = useBackendApi()
 
     const inputRef = useRef(null);

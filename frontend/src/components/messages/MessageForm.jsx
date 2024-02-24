@@ -8,29 +8,17 @@ import { useFormik } from 'formik';
 import { useAuth, useBackendApi } from "../hooks/useAuth";
 import * as Yup from 'yup';
 import { actions as messagesSlice } from "../../store/messagesSlice"
-import { webSocket } from '../../webSocket/index'
 import { selectCurrentChannelId } from "../../store/channelsSlice";
 
 const MessageForm = (props) => {
 
     const { username } = props
-    // const { sendMessage } = webSocket()
     const { newMessage } = useBackendApi();
 
 
     const dispatch = useDispatch()
     const auth = useAuth();
     const currentChannelId = useSelector(selectCurrentChannelId)
-
-
-    // const handleFormSubmit = (values) => {
-    //     const message = {
-    //         body: values.body,
-    //         username: currentUser
-    //     }
-    //     dispatch(messagesSlice.sendMessage(message))
-    //     formik.resetForm()
-    // }
 
     const formik = useFormik({
         initialValues: {

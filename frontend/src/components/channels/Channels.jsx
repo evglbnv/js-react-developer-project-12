@@ -5,12 +5,8 @@ import { BsPlusSquare } from "react-icons/bs";
 import { Col, Button, Nav } from "react-bootstrap";
 import Channel from "./Channel";
 import { selectChannels, selectCurrentChannelId } from "../../store/channelsSlice";
-
-import axios from "axios";
-
 import { modalActions } from "../../store/modalSlice";
 import ChannelsModal from "../modals/ChannelsModal";
-
 import { useAuth } from "../../components/hooks/useAuth";
 import { fetchChannels } from "../../store/channelsSlice";
 
@@ -19,8 +15,6 @@ const Channels = () => {
 
     const dispatch = useDispatch();
     const { getAuthHeader } = useAuth()
-
-
     const channels = useSelector(selectChannels);
     const currentChannelId = useSelector(selectCurrentChannelId)
 
@@ -32,16 +26,6 @@ const Channels = () => {
             dispatch(fetchChannels(header));
 
         }, [dispatch, getAuthHeader])
-
-    // axios.get('/api/v1/data', {
-    //     headers: {
-    //         Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTcwNjM2MTM4M30.ouJSsOdXILDYa9hM63P7ErmgT5s9UP3UwQNQcoO50hA`,
-    //     },
-    // }).then((response) => {
-    //     console.log(response.data); // =>[{ id: '1', name: 'general', removable: false }, ...]
-    // });
-
-    // console.log(list)
 
     return (
         <>

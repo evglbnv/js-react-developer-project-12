@@ -6,7 +6,6 @@ import {
 } from 'react-bootstrap';
 import Messages from "./messages/Messages";
 import Channels from "./channels/Channels";
-// import AddChannelModal from "./modals/AddChannel";
 import { useAuth, useBackendApi } from "../components/hooks/useAuth";
 import { useDispatch, } from "react-redux";
 import { fetchChannels } from "../../src/store/channelsSlice";
@@ -20,10 +19,6 @@ const ChatPage = () => {
     const { connectBackend, disconnectBackend } = useBackendApi()
 
     const dispatch = useDispatch();
-
-    // useEffect(() => {
-    //     dispatch(fetchChannels(auth.getAuthHeader()))
-    // }, [auth, dispatch])
 
     useEffect(
         () => {
