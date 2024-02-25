@@ -4,6 +4,7 @@ import React, { useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import ChatPage from "./ChatPage";
 import LoginPage from "./LoginPage";
+import SignUpPage from "./SignUpPage";
 import NotFoundPage from "./NotFoundPage";
 import { useAuth } from "./hooks/useAuth";
 
@@ -66,7 +67,8 @@ const App = () => {
         <>
             <Router>
                 <Routes>
-                    <Route path="/login" element={<AuthRoute><LoginPage /></AuthRoute>} />
+                    <Route path="/login" element={<LoginPage />} />
+                    <Route path="/signup" element={<SignUpPage />} />
                     <Route path="/" element={<PrivateRoute><ChatPage /></PrivateRoute>} />
                     <Route path="*" element={<NotFoundPage />} />
                 </Routes>

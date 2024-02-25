@@ -1,0 +1,120 @@
+/* eslint-disable no-unused-vars */
+import React, { useState, useRef, useEffect } from 'react'
+
+import { Container, Row, Col, Card, Image, Form, Button } from 'react-bootstrap';
+
+import { useLocation, useNavigate } from 'react-router-dom';
+import { useFormik } from 'formik';
+import { useAuth } from './hooks/useAuth';
+import * as Yup from 'yup';
+
+const SignUpPage = () => {
+
+    const navigate = useNavigate()
+    const auth = useAuth()
+    const [error, setError] = useState(false)
+    const inputRef = useRef(null)
+
+    // useEffect(() => {
+    //     inputRef.current.focus()
+    // }, [])
+
+    const validationSchema = Yup.object({
+        username: Yup
+            .string()
+            .trim()
+            .required('required field')
+            .min(3, 'Username should be at least 3 char')
+            .max(20, 'Username should not excess 20 char'),
+        password: Yup
+            .string()
+            .trim()
+            .required('required field')
+            .min(6, 'password should be at least 6 symbols'),
+        confirmPassword: Yup
+            .string()
+            .test('confirm password', 'passwords does not match', (
+                value, context) => value === context.parent.password
+            ),
+    })
+
+    const formik = useFormik({
+        initialValues: {
+            username: '',
+            password: '',
+        },
+        validationSchema
+    })
+
+    return (
+        <Container fluid className='h-100'>
+            <Row className='justify-content-center align-content-center h-100'>
+                <Col className='col-12 col-md-8 col-xxl-6'>
+                    <Card className='shadow-sm'>
+                        <Card.Body className='d-flex flex-column flex-md-row justify-content-around align-items-center p-5'>
+                            <Image roundedCircle="true" alt="Registration" />
+                            <Form className='w-50'>
+                                <h1 className='text-center mb-4'>Registration</h1>
+                                <Form.Floating className='mb-3'>
+                                    <Form.Control
+                                        id="username"
+                                        name="username"
+                                        autoComplete='username'
+                                        placeholder='username'
+                                        type='text'
+                                        value={formik.values.username}
+                                        onChange={formik.handleChange}
+                                        onBlur={formik.handleBlur}
+                                        isInvalid={formik.errors.username}
+                                    />
+                                    <Form.Label htmlFor='username'>
+                                        Username
+                                    </Form.Label>
+                                    <Form.Text className='invalid-tooltip'>
+                                        {formik.errors.username || null}
+                                    </Form.Text>
+                                </Form.Floating>
+                                <Form.Floating className='mb-3'>
+                                    <Form.Control
+                                        id="password"
+                                        name="password"
+                                        autoComplete="password"
+                                        placeholder='Password'
+                                        type="password"
+                                        value={formik.values.password}
+                                        disabled={formik.isSubmitting}
+                                        isInvalid={formik.errors.password}
+                                        onChange={formik.handleChange}
+                                        onBlur={formik.handleBlur}
+                                    />
+                                    <Form.Label htmlFor="password">
+                                        Password
+                                    </Form.Label>
+                                    <Form.Text className='invalid-tooltip'>
+                                        {formik.errors.password}
+                                    </Form.Text>
+                                </Form.Floating>
+                                <Form.Control
+                                    id='confirmPassword'
+                                    name="confirmPassword"
+                                    autoComplete='confirmPassword'
+                                    placeholder='confirmPassword'
+                                    type="password"
+                                    value={formik.values.confirmPassword}
+                                    disabled={formik.isSubmitting}
+                                    isInvalid={formik.errors.confirmPassword}
+                                    onChange={formik.handleChange}
+                                    onBlur={formik.handleBlur}
+                                >
+
+                                </Form.Control>
+                            </Form>
+                        </Card.Body>
+                    </Card>
+                </Col>
+            </Row>
+        </Container>
+    )
+}
+
+export default SignUpPage
