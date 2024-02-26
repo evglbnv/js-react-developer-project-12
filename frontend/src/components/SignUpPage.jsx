@@ -7,6 +7,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { useFormik } from 'formik';
 import { useAuth } from './hooks/useAuth';
 import * as Yup from 'yup';
+import axios from 'axios';
 
 const SignUpPage = () => {
 
@@ -15,9 +16,11 @@ const SignUpPage = () => {
     const [error, setError] = useState(false)
     const inputRef = useRef(null)
 
-    // useEffect(() => {
-    //     inputRef.current.focus()
-    // }, [])
+    const userNameRef = useRef()
+
+    useEffect(() => {
+        userNameRef.current.focus()
+    }, [])
 
     const validationSchema = Yup.object({
         username: Yup
@@ -43,7 +46,19 @@ const SignUpPage = () => {
             username: '',
             password: '',
         },
-        validationSchema
+        validationSchema,
+        onSubmit: async (values) => {
+            try {
+                const response = await axios.post('/api/v1/signup', {
+                    user: values.user,
+                    password: values.password
+                })
+            } catch (e) {
+                if (e.response?.status === 409) {
+                    setError(true)
+                }
+            }
+        }
     })
 
     return (
@@ -53,19 +68,20 @@ const SignUpPage = () => {
                     <Card className='shadow-sm'>
                         <Card.Body className='d-flex flex-column flex-md-row justify-content-around align-items-center p-5'>
                             <Image roundedCircle="true" alt="Registration" />
-                            <Form className='w-50'>
+                            <Form className='w-50' onSubmit={formik.handleSubmit}>
                                 <h1 className='text-center mb-4'>Registration</h1>
                                 <Form.Floating className='mb-3'>
                                     <Form.Control
                                         id="username"
-                                        name="username"
+                                        name="user"
                                         autoComplete='username'
                                         placeholder='username'
                                         type='text'
-                                        value={formik.values.username}
+                                        value={formik.values.user}
                                         onChange={formik.handleChange}
                                         onBlur={formik.handleBlur}
-                                        isInvalid={formik.errors.username}
+                                        isInvalid={formik.errors.user || error}
+                                        ref={userNameRef}
                                     />
                                     <Form.Label htmlFor='username'>
                                         Username
@@ -83,7 +99,7 @@ const SignUpPage = () => {
                                         type="password"
                                         value={formik.values.password}
                                         disabled={formik.isSubmitting}
-                                        isInvalid={formik.errors.password}
+                                        isInvalid={formik.errors.password || error}
                                         onChange={formik.handleChange}
                                         onBlur={formik.handleBlur}
                                     />
@@ -94,20 +110,29 @@ const SignUpPage = () => {
                                         {formik.errors.password}
                                     </Form.Text>
                                 </Form.Floating>
-                                <Form.Control
-                                    id='confirmPassword'
-                                    name="confirmPassword"
-                                    autoComplete='confirmPassword'
-                                    placeholder='confirmPassword'
-                                    type="password"
-                                    value={formik.values.confirmPassword}
-                                    disabled={formik.isSubmitting}
-                                    isInvalid={formik.errors.confirmPassword}
-                                    onChange={formik.handleChange}
-                                    onBlur={formik.handleBlur}
-                                >
-
-                                </Form.Control>
+                                <Form.Floating>
+                                    <Form.Control
+                                        id='confirmPassword'
+                                        name="confirmPassword"
+                                        autoComplete='confirmPassword'
+                                        placeholder='confirmPassword'
+                                        type="password"
+                                        value={formik.values.confirmPassword}
+                                        disabled={formik.isSubmitting}
+                                        isInvalid={formik.errors.confirmPassword || error}
+                                        onChange={formik.handleChange}
+                                        onBlur={formik.handleBlur}
+                                    />
+                                    <Form.Label htmlFor="confirmPassword">
+                                        Confirm Password
+                                    </Form.Label>
+                                    <Form.Text className='invalid-tooltip'>
+                                        {formik.errors.confirmPassword}
+                                    </Form.Text>
+                                </Form.Floating>
+                                <Button type="submit" variant="outline-primary" className='w-100' disabled={formik.isSubmitting}>
+                                    Register
+                                </Button>
                             </Form>
                         </Card.Body>
                     </Card>
@@ -115,6 +140,6 @@ const SignUpPage = () => {
             </Row>
         </Container>
     )
-}
 
+}
 export default SignUpPage

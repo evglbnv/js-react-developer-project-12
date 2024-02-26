@@ -95,8 +95,6 @@ const LoginPage = () => {
         }
     }
 
-
-
     const formik = useFormik({
         initialValues: {
             username: '',

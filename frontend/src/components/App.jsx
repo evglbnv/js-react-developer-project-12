@@ -9,6 +9,7 @@ import NotFoundPage from "./NotFoundPage";
 import { useAuth } from "./hooks/useAuth";
 
 import axios from 'axios';
+import Header from "./Header";
 
 const PrivateRoute = ({ children }) => {
     const auth = useAuth();
@@ -66,6 +67,7 @@ const App = () => {
     return (
         <>
             <Router>
+                <Header />
                 <Routes>
                     <Route path="/login" element={<LoginPage />} />
                     <Route path="/signup" element={<SignUpPage />} />

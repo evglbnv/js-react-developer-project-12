@@ -28,7 +28,7 @@ const ChatPage = () => {
             return () => {
                 disconnectBackend()
             };
-        }, [dispatch, getAuthHeader, connectBackend, disconnectBackend])
+        }, [dispatch, getAuthHeader, connectBackend, disconnectBackend, auth])
 
     return (
         <Container className="h-100 my-4 overflow-hidden rounded shadow">

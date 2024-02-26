@@ -1,6 +1,7 @@
 /* eslint-disable react/prop-types */
 import React, { useCallback, useState } from 'react';
 import { AuthContext } from '../contexts/AuthContext.js';
+// import { Navigate } from 'react-router-dom';
 
 const AuthProvider = ({ children }) => {
 
@@ -15,6 +16,11 @@ const AuthProvider = ({ children }) => {
         setUser(userData)
     }
 
+    const logOut = () => {
+        localStorage.removeItem('user')
+        setUser(null)
+    }
+
     const getAuthHeader = useCallback(() => {
         const user = JSON.parse(localStorage.getItem('user'))
         if (user) {
@@ -25,7 +31,7 @@ const AuthProvider = ({ children }) => {
         return {}
     }, [])
 
-    const value = React.useMemo(() => ({ loggedIn, logIn, getAuthHeader, user }), [loggedIn, logIn])
+    const value = React.useMemo(() => ({ loggedIn, logIn, getAuthHeader, logOut, user }), [loggedIn, logIn])
 
 
     return (

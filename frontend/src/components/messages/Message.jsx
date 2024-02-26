@@ -6,6 +6,8 @@ import useAuth from "../hooks/useAuth";
 const Message = (props) => {
     const { username, body } = props
 
+    console.log(username)
+
     const author = (
         <div className="small text-dark">
             <strong>{username}</strong>

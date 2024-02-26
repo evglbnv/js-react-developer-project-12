@@ -23,6 +23,7 @@ const Messages = () => {
     }, [])
 
     const messages = useSelector(selectMessages)
+    console.log(messages)
     const currentChannelId = useSelector(selectCurrentChannelId)
     const activeChannel = useSelector(selectActiveChannel)
 
