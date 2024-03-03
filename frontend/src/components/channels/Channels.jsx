@@ -9,10 +9,12 @@ import { modalActions } from "../../store/modalSlice";
 import ChannelsModal from "../modals/ChannelsModal";
 import { useAuth } from "../../components/hooks/useAuth";
 import { fetchChannels } from "../../store/channelsSlice";
+import { useTranslation } from 'react-i18next';
 
 
 const Channels = () => {
 
+    const { t } = useTranslation();
     const dispatch = useDispatch();
     const { getAuthHeader } = useAuth()
     const channels = useSelector(selectChannels);
@@ -24,35 +26,32 @@ const Channels = () => {
         () => {
             const header = getAuthHeader();
             dispatch(fetchChannels(header));
-
         }, [dispatch, getAuthHeader])
 
     return (
         <>
-            <Col className="border-end px-0 bg-light flex-column h-100 d-flex">
-                <div className="d-flex mt-1 justify-content-between mb-2 ps-4 p-4">
-                    <b>Каналы</b>
-                    <Button
-                        variant="group-vertical"
-                        className="p-0 text-primary"
-                        onClick={handleAddChannelModal}
-                    >
-                        <BsPlusSquare />
-                        <span className="visually-hidden">+</span>
-                    </Button>
-                </div>
-                <Nav
-                    id="channel-box"
-                    variant="pills"
-                    fill
-                    as="ul"
-                    className="flex-column px-2 mb-3 overflow-auto h-100 d-block"
+            <div className="d-flex mt-1 justify-content-between mb-2 ps-4 p-4">
+                <b>{t('chat.title')}</b>
+                <Button
+                    variant="group-vertical"
+                    className="p-0 text-primary"
+                    onClick={handleAddChannelModal}
                 >
-                    {channels.map((channel) => (
-                        <Channel key={channel.id} channel={channel} />
-                    ))}
-                </Nav>
-            </Col>
+                    <BsPlusSquare />
+                    <span className="visually-hidden">+</span>
+                </Button>
+            </div>
+            <Nav
+                id="channel-box"
+                variant="pills"
+                fill
+                as="ul"
+                className="flex-column px-2 mb-3 overflow-auto h-100 d-block"
+            >
+                {channels.map((channel) => (
+                    <Channel key={channel.id} channel={channel} />
+                ))}
+            </Nav>
             <ChannelsModal />
         </>
     )

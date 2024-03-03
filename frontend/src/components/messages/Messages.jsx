@@ -11,11 +11,14 @@ import { fetchMessageData } from "../../api/fetchApi";
 import { actions as messagesSlice } from "../../store/messagesSlice"
 import { selectCurrentChannelId, selectActiveChannel } from "../../store/channelsSlice";
 import { currentChannelMessages } from "../../store/messagesSlice";
+import { useTranslation } from 'react-i18next';
 
 const Messages = () => {
 
     const auth = useAuth();
     const dispatch = useDispatch();
+    const { t } = useTranslation();
+
 
 
     useEffect(() => {
@@ -32,6 +35,7 @@ const Messages = () => {
     }, [messages])
 
     const currentMessages = useSelector(currentChannelMessages)
+    const count = currentMessages.length
 
     return (
         <Col className="p-0 h-100">
@@ -42,7 +46,7 @@ const Messages = () => {
                             #{activeChannel?.name}
                         </strong>
                     </p>
-                    <span className="text-muted">Number of messages: {currentMessages.length}</span>
+                    <span className="text-muted">{t('chat.messages', { count })}</span>
                 </div>
                 <div id="messges-box" className="chat-messages overflow-auto px-5">
                     <Message />

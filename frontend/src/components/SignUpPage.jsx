@@ -8,14 +8,17 @@ import { useFormik } from 'formik';
 import { useAuth } from './hooks/useAuth';
 import * as Yup from 'yup';
 import axios from 'axios';
+import SignUp from '../images/SignUp.jpg'
+import { useTranslation } from 'react-i18next';
 
 const SignUpPage = () => {
 
     const navigate = useNavigate()
     const auth = useAuth()
+    const { logIn } = useAuth();
     const [error, setError] = useState(false)
     const inputRef = useRef(null)
-
+    const { t } = useTranslation();
     const userNameRef = useRef()
 
     useEffect(() => {
@@ -26,14 +29,14 @@ const SignUpPage = () => {
         username: Yup
             .string()
             .trim()
-            .required('required field')
-            .min(3, 'Username should be at least 3 char')
-            .max(20, 'Username should not excess 20 char'),
+            .required(t('valid.required'))
+            .min(3, t('valid.min'))
+            .max(20, t('valid.max')),
         password: Yup
             .string()
             .trim()
-            .required('required field')
-            .min(6, 'password should be at least 6 symbols'),
+            .required(t('valid.required'))
+            .min(6, t('valid.minPass')),
         confirmPassword: Yup
             .string()
             .test('confirm password', 'passwords does not match', (
@@ -67,7 +70,7 @@ const SignUpPage = () => {
                 <Col className='col-12 col-md-8 col-xxl-6'>
                     <Card className='shadow-sm'>
                         <Card.Body className='d-flex flex-column flex-md-row justify-content-around align-items-center p-5'>
-                            <Image roundedCircle="true" alt="Registration" />
+                            <Image roundedCircle="true" alt="Registration" src={SignUp} />
                             <Form className='w-50' onSubmit={formik.handleSubmit}>
                                 <h1 className='text-center mb-4'>Registration</h1>
                                 <Form.Floating className='mb-3'>
@@ -110,7 +113,7 @@ const SignUpPage = () => {
                                         {formik.errors.password}
                                     </Form.Text>
                                 </Form.Floating>
-                                <Form.Floating>
+                                <Form.Floating className='mb-3'>
                                     <Form.Control
                                         id='confirmPassword'
                                         name="confirmPassword"

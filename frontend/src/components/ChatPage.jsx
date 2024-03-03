@@ -33,8 +33,8 @@ const ChatPage = () => {
     return (
         <Container className="h-100 my-4 overflow-hidden rounded shadow">
             {/* <AddChannelModal /> */}
-            <Row className="h-100 bg-white">
-                <Col className="border-end pt-5 px-0 bg-light" xs={4} md={2}>
+            <Row className="h-100 bg-white flex-md-row">
+                <Col className="col-4 col-md-2 border-end px-0 bg-light flex-column h-100 d-flex">
                     <Channels />
                 </Col>
                 <Col className="h-100 p-0">

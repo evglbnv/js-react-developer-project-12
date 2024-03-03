@@ -15,12 +15,15 @@ const init = async () => {
 
   const socket = io('/', { autoConnect: false })
 
-  await i18n
-    .use(initReactI18next)
-    .init({
-      resources,
-      fallbackLng: 'ru',
-    });
+  const options = {
+    resources,
+    lng: 'ru',
+    fallbackLng: ['ru', 'en'],
+    interpolation: {
+      escapeValue: false,
+    },
+  }
+  i18n.use(initReactI18next).init(options);
 
   return (
     <Provider store={store}>

@@ -8,9 +8,10 @@ import { actions as channelsSlice } from "../../store/channelsSlice"
 import { actions as messagesSlice } from "../../store/messagesSlice"
 import { selectCurrentChannelId } from "../../store/channelsSlice"
 import { modalActions } from "../../store/modalSlice";
+import { useTranslation } from 'react-i18next';
 
 const Channel = ({ channel }) => {
-
+    const { t } = useTranslation();
     const dispatch = useDispatch();
     const { id, name, removable } = channel
 
@@ -46,10 +47,10 @@ const Channel = ({ channel }) => {
                     </Dropdown.Toggle>
                     <Dropdown.Menu>
                         <Dropdown.Item onClick={handleDeleteChannelModal}>
-                            Удалить
+                            {t('chat.dropdownRemove')}
                         </Dropdown.Item>
                         <Dropdown.Item onClick={handleRenameModal}>
-                            Переименовать
+                            {t('chat.dropdownRename')}
                         </Dropdown.Item>
                     </Dropdown.Menu>
                 </Dropdown>

@@ -14,6 +14,7 @@ import loginImage from '../images/login-image.jpg'
 import Button from 'react-bootstrap/Button';
 // eslint-disable-next-line no-unused-vars
 import { useAuth } from './hooks/useAuth.jsx';
+import { useTranslation } from 'react-i18next';
 import * as Yup from 'yup';
 import { useFormik } from 'formik';
 // import { useEffect } from "react";
@@ -22,6 +23,7 @@ import { useFormik } from 'formik';
 
 
 const FormContainer = ({ children }) => {
+
     return (
         <Container fluid className="h-100">
             <Row className="justify-content-center align-content-center h-100">
@@ -40,7 +42,7 @@ const FormContainer = ({ children }) => {
                         <Card.Footer className="p-4">
                             <div className="text-center">
                                 <span>Нет аккаунта?</span>
-                                <Link to="/">Регистрация</Link>
+                                <Link to="/signup">Регистрация</Link>
                             </div>
                         </Card.Footer>
                     </Card>
@@ -68,7 +70,7 @@ const validationSchema = Yup.object().shape({
 
 const LoginPage = () => {
 
-
+    const { t } = useTranslation();
     const [authFailed, setAuthFailed] = useState(false)
 
     const navigate = useNavigate();
@@ -105,11 +107,11 @@ const LoginPage = () => {
     })
 
     return (
+
         <div>
-            <h1>Login Page</h1>
             <FormContainer>
                 <Form onSubmit={formik.handleSubmit}>
-                    <h1 className="text-center mb-4">Войти</h1>
+                    <h1 className="text-center mb-4">{t('login.title')}</h1>
                     <fieldset>
                         <Stack gap={4}>
                             <FloatingLabel controlId="floatingUsername" label="Ваш ник" className="position-relative">
@@ -142,7 +144,7 @@ const LoginPage = () => {
                             <Form.Control.Feedback type="invalid" tooltip className="position-absolute top-0 start-100">
                                 {formik.errors.password}
                             </Form.Control.Feedback>
-                            <Button type="submit" variant="outline-primary">Войти</Button>
+                            <Button type="submit" variant="outline-primary">{t('login.signUp')}</Button>
                         </Stack>
                     </fieldset>
                 </Form>

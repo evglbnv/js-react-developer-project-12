@@ -7,10 +7,13 @@ import { useSelector } from "react-redux";
 import * as Yup from 'yup'
 import { selectChannels } from "../../store/channelsSlice";
 import { useBackendApi } from "../hooks/useAuth";
+import { useTranslation } from "react-i18next";
 
 const AddChannelModal = ({ onHide }) => {
 
-    const { newChannel } = useBackendApi()
+    const { newChannel } = useBackendApi();
+
+    const { t } = useTranslation()
 
     const inputRef = useRef(null);
 
@@ -21,10 +24,10 @@ const AddChannelModal = ({ onHide }) => {
     const validationSchema = Yup.object().shape({
         name: Yup.string()
             .trim()
-            .required('Обязательное поле')
-            .min(3, 'От 3 до 20 символов')
-            .max(20, 'От 3 до 20 символов')
-            .notOneOf(blackList, 'Должно быть уникальным')
+            .required(t('valid.required'))
+            .min(3, t('valid.min'))
+            .max(20, t('valid.max'))
+            .notOneOf(blackList, t('valid.mustBeUniq'))
 
     })
 
@@ -34,6 +37,7 @@ const AddChannelModal = ({ onHide }) => {
         },
         validationSchema,
         validateOnChange: false,
+        validateOnBlur: false,
         onSubmit: async ({ name }) => {
             const channel = { name }
             try {
@@ -42,6 +46,7 @@ const AddChannelModal = ({ onHide }) => {
                 onHide()
                 formik.resetForm()
             } catch (err) {
+                formik.setSubmitting(false);
                 console.error(err)
             }
         }
@@ -50,8 +55,8 @@ const AddChannelModal = ({ onHide }) => {
 
     return (
         <>
-            <Modal.Header closeButton>
-                <Modal.Title>Добавить канал</Modal.Title>
+            <Modal.Header closeButton onHide={onHide}>
+                <Modal.Title>{t('modal.addTitle')}</Modal.Title>
             </Modal.Header>
             <Modal.Body>
                 <Form onSubmit={formik.handleSubmit}>
@@ -62,13 +67,23 @@ const AddChannelModal = ({ onHide }) => {
                             type="text"
                             value={formik.values.name || ''}
                             onChange={formik.handleChange}
+                            onBlur={formik.handleBlur}
+                            disabled={formik.isSubmitting}
+                            isInvalid={formik.errors.name}
                             ref={inputRef}
                         />
-                        {/* <Form.Label>123</Form.Label> */}
+                        <Form.Label>{t('modal.addLabel')}</Form.Label>
+                        <Form.Text className="invalid-feedback">
+                            {formik.errors.name}
+                        </Form.Text>
                     </Form.Floating>
                     <Modal.Footer>
-                        <Button variant="secondary" type="button" >Отменить</Button>
-                        <Button variant="primary" type="submit">Добавить</Button>
+                        <Button variant="secondary" type="button" onClick={onHide}>
+                            {t('modal.cancelButton')}
+                        </Button>
+                        <Button variant="primary" type="submit" disabled={formik.isSubmitting}>
+                            {t('modal.addButton')}
+                        </Button>
                     </Modal.Footer>
                 </Form>
             </Modal.Body>
