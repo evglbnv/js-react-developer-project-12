@@ -72,7 +72,7 @@ const SignUpPage = () => {
                         <Card.Body className='d-flex flex-column flex-md-row justify-content-around align-items-center p-5'>
                             <Image roundedCircle="true" alt="Registration" src={SignUp} />
                             <Form className='w-50' onSubmit={formik.handleSubmit}>
-                                <h1 className='text-center mb-4'>Registration</h1>
+                                <h1 className='text-center mb-4'>{t('signup.header')}</h1>
                                 <Form.Floating className='mb-3'>
                                     <Form.Control
                                         id="username"
@@ -87,7 +87,7 @@ const SignUpPage = () => {
                                         ref={userNameRef}
                                     />
                                     <Form.Label htmlFor='username'>
-                                        Username
+                                        {t('forms.username.label')}
                                     </Form.Label>
                                     <Form.Text className='invalid-tooltip'>
                                         {formik.errors.username || null}
@@ -107,7 +107,7 @@ const SignUpPage = () => {
                                         onBlur={formik.handleBlur}
                                     />
                                     <Form.Label htmlFor="password">
-                                        Password
+                                        {t('forms.password.label')}
                                     </Form.Label>
                                     <Form.Text className='invalid-tooltip'>
                                         {formik.errors.password}
@@ -127,14 +127,14 @@ const SignUpPage = () => {
                                         onBlur={formik.handleBlur}
                                     />
                                     <Form.Label htmlFor="confirmPassword">
-                                        Confirm Password
+                                        {t('forms.passwordConfirmation.label')}
                                     </Form.Label>
                                     <Form.Text className='invalid-tooltip'>
                                         {formik.errors.confirmPassword}
                                     </Form.Text>
                                 </Form.Floating>
                                 <Button type="submit" variant="outline-primary" className='w-100' disabled={formik.isSubmitting}>
-                                    Register
+                                    {t('signup.button')}
                                 </Button>
                             </Form>
                         </Card.Body>
